@@ -23,13 +23,15 @@ function meterToUnit(distance: number, unit: Unit) {
   }
 }
 
-console.log(
-  'METER',
-  meterToUnit(5, 'METER'),
-  'CM',
-  meterToUnit(5, 'CM'),
-  'KM',
-  meterToUnit(5, 'KM'),
-  'MM',
-  meterToUnit(5, 'MM')
-);
+// console.log(
+//   'METER',
+//   meterToUnit(5, 'METER'),
+//   'CM',
+//   meterToUnit(5, 'CM'),
+//   'KM',
+//   meterToUnit(5, 'KM'),
+//   'MM',
+//   meterToUnit(5, 'MM')
+// );
+
+export { meterToUnit, Unit };
