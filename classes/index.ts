@@ -39,6 +39,8 @@ class ActionChar {
 }
 
 const bobo = new ActionChar('bobo', 222, 60, 1, 500);
-console.log(bobo);
+// console.log(bobo);
 bobo.changeAlias('Logan');
-console.log(bobo);
+// console.log(bobo);
+
+export { ActionChar };

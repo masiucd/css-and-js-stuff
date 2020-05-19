@@ -20,14 +20,16 @@ const tuple4 = makeTuple<string, boolean>('3', true);
 
 // console.log(tuple1, tuple2, tuple3, tuple4);
 
+// const makeFullname = <T extends { first: string, last: string }>(obj: T) => {
+//   return {
+//     ...obj,
+//     fullName: obj.first + " " + obj.last
+//   }
+// }
 
-const makeFullname = <T extends { first: string, last: string }>(obj: T) => {
-  return {
-    ...obj,
-    fullName: obj.first + " " + obj.last
-
-  }
+function pushToList<T>(val: T, xs: T[]): T[] {
+  xs.push(val);
+  return xs;
 }
 
-
-console.log(makeFullname({ first: 's', last: 's', age: 22 }))
+export { pushToList, giveMeLast };
