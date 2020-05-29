@@ -9,5 +9,6 @@ describe('Person is correct', () => {
       cool: true,
       friends: ['Tina', 'Stina', 'Boris'],
     });
+    
   });
 });
