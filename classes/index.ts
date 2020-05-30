@@ -18,7 +18,7 @@ class ActionChar {
     health: number,
     strength: number,
     secretIdentify: number,
-    stamina: number
+    stamina: number,
   ) {
     this.alias = alias;
     this.health = health;
@@ -38,9 +38,9 @@ class ActionChar {
   }
 }
 
-const bobo = new ActionChar('bobo', 222, 60, 1, 500);
+const bobo = new ActionChar("bobo", 222, 60, 1, 500);
 // console.log(bobo);
-bobo.changeAlias('Logan');
+bobo.changeAlias("Logan");
 // console.log(bobo);
 
 export { ActionChar };

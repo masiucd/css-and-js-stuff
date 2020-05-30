@@ -33,3 +33,5 @@ console.log(protocol);
 // protocol = Protocols.FTP;
 
 // console.log(protocol);
+
+export { autoComplete };
