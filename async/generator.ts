@@ -17,10 +17,12 @@ async function* numbersFunc(): AsyncGenerator<number, void, unknown> {
   }
 }
 
-async function main() {
+async function main2() {
   for await (let num of numbersFunc()) {
     console.log(num);
   }
 }
 
-main();
+main2();
+
+export { magic, main2, numbersFunc };

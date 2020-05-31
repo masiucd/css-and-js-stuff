@@ -11,4 +11,11 @@ describe("async Typescript", () => {
   test("function should exists", () => {
     expect(getUserDetails).toBeDefined();
   });
+
+  it("calls console.log with right number", () => {
+    const consoleSpy = jest.spyOn(console, "log");
+    console.log("hello");
+
+    expect(consoleSpy).toHaveBeenCalledWith("hello");
+  });
 });
