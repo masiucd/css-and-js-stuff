@@ -5,14 +5,10 @@ async function main() {
   let team;
   for (let handle of handles) {
     team = await getUserDetails(handle);
-    console.log(
-      "Team name :",
-      team.name,
-      "\n\n\n",
-      "Team Ultras ",
-      team.ultras,
-    );
+    console.log("Team name :", team.name, "Team Ultras ", team.ultras);
   }
 }
 
 main();
+
+export { main };
