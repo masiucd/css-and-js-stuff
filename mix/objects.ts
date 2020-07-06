@@ -9,16 +9,16 @@ interface Dogs {
 
 const dogs: Dogs = {
   pysia: {
-    name: "Pysia",
-    breed: "Sznauzer",
+    name: 'Pysia',
+    breed: 'Sznauzer',
   },
   boris: {
-    name: "Boris",
-    breed: "Pug",
+    name: 'Boris',
+    breed: 'Pug',
   },
   linda: {
-    name: "Linda",
-    breed: "Schaufer",
+    name: 'Linda',
+    breed: 'Schaufer',
   },
 };
 
