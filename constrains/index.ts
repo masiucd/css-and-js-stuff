@@ -17,5 +17,3 @@ const birdy: Bird = {
 const myContainer: Container<number> = {
   unit: 22,
 };
-
-console.log(myContainer);

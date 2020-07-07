@@ -5,16 +5,16 @@ interface Team {
 
 const teams: Record<string, Team> = {
   legia: {
-    name: "Legia Warszawa",
-    ultras: "Zyleta",
+    name: 'Legia Warszawa',
+    ultras: 'Zyleta',
   },
   pogon: {
-    name: "Pogon Szeczin",
-    ultras: "Portowcy",
+    name: 'Pogon Szeczin',
+    ultras: 'Portowcy',
   },
   ifk: {
-    name: "Ifk GBG",
-    ultras: "Anglarna",
+    name: 'Ifk GBG',
+    ultras: 'Anglarna',
   },
 };
 

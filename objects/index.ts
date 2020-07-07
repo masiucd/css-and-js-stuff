@@ -2,6 +2,7 @@ interface Dog {
   name: string;
   breed: string;
   age: number;
+  date: Date;
 }
 
 type DogKeys = keyof Dog;
@@ -12,10 +13,8 @@ type DogKeys = keyof Dog;
  */
 let key1: DogKeys = 'name'; // 'Name' | 'Breed' | 'Age'
 
-function foo<T, K extends keyof T>(obj: T, key: K) {
-  // console.log(typeof obj[key]);
-
-  console.log(key === 'name');
+export function foo<T, K extends keyof T>(obj: T, key: K) {
+  // console.log(obj[key]);
   return obj[key];
 }
 
@@ -24,4 +23,7 @@ let person = {
   age: 21,
   cool: true,
 };
-console.log(foo(person, 'name'));
+
+// foo(person, 'name');
+// foo(person, 'age');
+// foo(person, 'cool');

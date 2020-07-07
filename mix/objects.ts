@@ -4,7 +4,7 @@ interface Dog {
 }
 
 interface Dogs {
-  [dog: string]: Dog;
+  [key: string]: Dog;
 }
 
 const dogs: Dogs = {

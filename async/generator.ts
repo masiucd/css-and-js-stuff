@@ -19,7 +19,7 @@ async function* numbersFunc(): AsyncGenerator<number, void, unknown> {
 
 async function main2() {
   for await (let num of numbersFunc()) {
-    console.log(num);
+    // console.log(num);
   }
 }
 

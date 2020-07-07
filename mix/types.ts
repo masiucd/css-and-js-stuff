@@ -1,11 +1,11 @@
 // String literal types
 
-let autoComplete: "on" | "off" = "on";
+let autoComplete: 'on' | 'off' = 'on';
 
-console.log(autoComplete);
-autoComplete = "off";
-console.log(autoComplete);
-console.log(typeof autoComplete);
+// console.log(autoComplete);
+autoComplete = 'off';
+// console.log(autoComplete);
+// console.log(typeof autoComplete);
 
 // WILL OT COMPILE
 // autoComplete = "boom";
@@ -23,11 +23,11 @@ let protocol: HyperTextProtocol;
 
 protocol = Protocols.HTTP;
 
-console.log(protocol);
+// console.log(protocol);
 
 protocol = Protocols.HTTPS;
 
-console.log(protocol);
+// console.log(protocol);
 
 // THROW ERROR!!!
 // protocol = Protocols.FTP;
