@@ -4,43 +4,43 @@ Useful code examples how you could use Typescript and how they actually works.
 
 ### What This Repo will cover ⚛️🥕
 
-* Generics 🏋️‍♀️
-* interfaces 💎
-* Constrains 💥
-* basic typings 💈
-* overload 𝐦
-* enums 🍎
-* functions λ
+- Generics 🏋️‍♀️
+- interfaces 💎
+- Constrains 💥
+- basic typings 💈
+- overload 𝐦
+- enums 🍎
+- functions λ
 
 Generics Example
 
-``` typescript
-
-  interface Dog {
-    name: string;
-    breed: string;
-    age: number;
-  }
+```typescript
+interface Dog {
+  name: string;
+  breed: string;
+  age: number;
+}
 
 /**
  * This will give us a auto complete
  * can  'Name' | 'Breed' | 'Age'
  */
-  type DogProps = keyof Dog
+type DogProps = keyof Dog;
 
-  function foo<T, K extends keyof T>(obj: T, key: K): T[K] {
-    return obj[key]
-  }
-
+function foo<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
 ```
 
 If there are any questions you could contact me on my Twitter <a href="https://twitter.com/CiszekMarcell" style="color: rgba(40, 53, 147, 1)"> MarcellCiszek </a>
 
 <br/>
 
-## get types
+## get types 🐝
 
-``` ts
+very useful way of declaring types in Typescript
+
+```ts
 const initialData = {
   tasks: {
     "task-1": { id: "task-1", content: "Take out the garbage" },
@@ -96,5 +96,4 @@ const foo = ["text 1", "text 2"] as const;
 // is the same as
 // This will fail in React!!!
 const bar = <const>["text 1", "text 2"];
-
 ```
