@@ -1,19 +1,21 @@
-interface Dog {
+export interface Dog {
   id: string;
   name: string;
   cool: boolean;
 }
 
-interface Cat {
+export interface Cat {
   color: string;
 }
 
-function getAnimal(animal: Dog | Cat) {
+export function getAnimal(animal: Dog | Cat) {
   // check if property exists in object
   if ("name" in animal) {
     print(animal.name);
+    return animal.name;
   } else {
     print(animal.color);
+    return animal.color;
   }
 }
 
@@ -26,14 +28,14 @@ function print(outPut: string) {
   console.log(outPut);
 }
 
-const bobbyDog: Dog = {
+export const bobbyDog: Dog = {
   id: "@",
   name: "BobbyDog",
   cool: true,
 };
-const charlieCat: Cat = {
+export const charlieCat: Cat = {
   color: "red",
 };
 
-getAnimal(bobbyDog);
-getAnimal(charlieCat);
+// getAnimal(bobbyDog);
+// getAnimal(charlieCat);
