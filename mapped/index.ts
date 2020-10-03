@@ -17,3 +17,5 @@ pogon.name = "Pogon";
 // legia.name = "Legia";
 
 type A = keyof Team;
+
+let keyOfTeam: A = "ultras";
