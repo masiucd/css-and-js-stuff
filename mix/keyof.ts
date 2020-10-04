@@ -25,3 +25,17 @@ type Locale = typeof locales[number]["locale"];
 type Lang = typeof locales[number]["language"];
 
 let language: Lang = "Polish";
+
+enum days {
+  monday = "monday",
+  tuesday = "tuesday",
+  wendsday = "wendsday",
+  thursday = "thursday",
+  firday = "friday",
+  saturday = "saturday",
+  sunday = "sunday",
+}
+
+type Day = keyof typeof days;
+
+const monday: Day = "monday";
