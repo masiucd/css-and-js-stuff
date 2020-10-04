@@ -55,7 +55,7 @@ let arrayMethods: Team = "filter";
 let ifk: TeamName = "ifk";
 let legia: TeamName = "Legia";
 
-console.log(ifk, legia);
+// console.log(ifk, legia);
 
 // foo(person, 'name');
 // foo(person, 'age');
