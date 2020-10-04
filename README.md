@@ -1,99 +1,46 @@
-# Typescript Land λ😎🌮
+# ts_land
 
-Useful code examples how you could use Typescript and how they actually works.
+## Table of Contents
 
-### What This Repo will cover ⚛️🥕
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Usage](#usage)
+- [Contributing](../CONTRIBUTING.md)
 
-- Generics 🏋️‍♀️
-- interfaces 💎
-- Constrains 💥
-- basic typings 💈
-- overload 𝐦
-- enums 🍎
-- functions λ
+## About <a name = "about"></a>
 
-Generics Example
+Write about 1-2 paragraphs describing the purpose of your project.
 
-```typescript
-interface Dog {
-  name: string;
-  breed: string;
-  age: number;
-}
+## Getting Started <a name = "getting_started"></a>
 
-/**
- * This will give us a auto complete
- * can  'Name' | 'Breed' | 'Age'
- */
-type DogProps = keyof Dog;
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
-function foo<T, K extends keyof T>(obj: T, key: K): T[K] {
-  return obj[key];
-}
+### Prerequisites
+
+What things you need to install the software and how to install them.
+
+```
+Give examples
 ```
 
-If there are any questions you could contact me on my Twitter <a href="https://twitter.com/CiszekMarcell" style="color: rgba(40, 53, 147, 1)"> MarcellCiszek </a>
+### Installing
 
-<br/>
+A step by step series of examples that tell you how to get a development env running.
 
-## get types 🐝
+Say what the step will be
 
-very useful way of declaring types in Typescript
-
-```ts
-const initialData = {
-  tasks: {
-    "task-1": { id: "task-1", content: "Take out the garbage" },
-    "task-2": { id: "task-2", content: "Watch my favorite show" },
-    "task-3": { id: "task-3", content: "Charge my phone" },
-    "task-4": { id: "task-4", content: "Cook dinner" },
-  },
-  columns: {
-    "column-1": {
-      id: "column-1",
-      title: "To do",
-      taskIds: ["task-1", "task-2", "task-3", "task-4"],
-    },
-  },
-  // Facilitate reordering of the columns
-  columnOrder: ["column-1"],
-};
-
-type D = typeof initialData;
-
-const list = ["hello", "good bye"];
-const list2 = ["hello", "good bye"];
-const list3 = ["hello", "good bye"] as const;
-
-type ListType = typeof list;
-type ListType2 = typeof list2[number];
-type ListType3 = typeof list3[number];
-
-const countries = [
-  {
-    country: "pl",
-    language: "Polish",
-  },
-  {
-    country: "se",
-    language: "Swedish",
-  },
-] as const;
-
-type Country = typeof countries[number]["country"];
-type CountryLang = typeof countries[number]["language"];
-
-const currencySymbols = {
-  GBP: "£",
-  USD: "$",
-  EUR: "€",
-};
-
-type Currency = typeof currencySymbols;
-type Currency2 = keyof typeof currencySymbols;
-
-const foo = ["text 1", "text 2"] as const;
-// is the same as
-// This will fail in React!!!
-const bar = <const>["text 1", "text 2"];
 ```
+Give the example
+```
+
+And repeat
+
+```
+until finished
+```
+
+End with an example of getting some data out of the system or using it for a little demo.
+
+## Usage <a name = "usage"></a>
+
+Add notes about how to use the system.
