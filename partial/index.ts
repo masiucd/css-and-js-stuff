@@ -13,4 +13,16 @@ const nums: Numbers = { a: 1, b: 2 }
 type OneOreThree = Pick<Numbers, "a">
 
 let oneOreThree: OneOreThree
-let foo = oneOreThree.a
+
+type UserType = {
+  name: string
+  age: number
+  gender: "M" | "F"
+}
+
+type PartialUser = Partial<UserType>
+
+const user: PartialUser = {
+  name: "Bob",
+  age: 45,
+}

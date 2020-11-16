@@ -22,5 +22,3 @@ type JimType = typeof jim
 
 type EventualType<T> = T extends infer R ? R : T
 type Unpromisify<T> = T extends Promise<infer R> ? R : T
-
-type T1 = EventualType<{ b: string }>
