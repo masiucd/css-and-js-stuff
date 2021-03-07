@@ -21,4 +21,4 @@ type PeronKeys = keyof IPerson
 type JimType = typeof jim
 
 type EventualType<T> = T extends infer R ? R : T
-type Unpromisify<T> = T extends Promise<infer R> ? R : T
+type Promisify<T> = T extends Promise<infer R> ? R : T
