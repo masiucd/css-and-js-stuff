@@ -1,184 +1,34 @@
-# Typescript Land λ😎🌮
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Use typescript to feel more secure when building larger application. Typescript is a great tool to make you and your team even more productive. Typescript work mostly today with any modern Javascript framework/library. Both on the client and on the server.
+## Getting Started
 
-### About the repo ⚛️🥕
+First, run the development server:
 
-<a name ="top"> </a>
-
-- [Generics](#generics) 🏋️‍♀️
-- [interfaces](#interfaces) 💎
-- [Constrains](#constrains) 💥
-- [basic typings](#bs) 💈
-- [overload](#overload) 𝐦
-- [enums](#enum) 🍎
-- [functions](#fn) λ
-- [mapped types](#mapped-types) λ
-- [Unknown](#unknown)
-
-## Generics <a name = "generics"></a>
-
-```typescript
-interface Dog {
-  name: string
-  breed: string
-  age: number
-}
-
-/**
- * This will give us a auto complete
- * can  'Name' | 'Breed' | 'Age'
- */
-type DogProps = keyof Dog
-
-function foo<T, K extends keyof T>(obj: T, key: K): T[K] {
-  return obj[key]
-}
+```bash
+npm run dev
+# or
+yarn dev
 ```
 
-```ts
-type ArrayFilter<T> = T extends any[] ? T : never
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-type StringsOrNumbers = ArrayFilter<string | number | string[] | number[]>
+You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-let xs: StringsOrNumbers = [1, 2, 3, 4, 5]
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-interface FootballTeam {
-  id: string
-  scores: number[]
-}
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-interface SuperHero {
-  id: number
-  power: string
-}
+## Learn More
 
-interface ItemSerice {
-  getItem: <T extends string | number>(
-    id: T,
-  ) => T extends string ? FootballTeam : SuperHero
-}
+To learn more about Next.js, take a look at the following resources:
 
-let itemService: ItemSerice
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-const footBallTeam = itemService.getItem("2121")
-const batman = itemService.getItem(2)
-```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-If there are any questions you could contact me on my Twitter <a href="https://twitter.com/CiszekMarcell" style="color: rgba(40, 53, 147, 1)"> MarcellCiszek </a>
+## Deploy on Vercel
 
-<br/>
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## get types 🐝
-
-very useful way of declaring types in Typescript
-
-```ts
-const initialData = {
-  tasks: {
-    "task-1": { id: "task-1", content: "Take out the garbage" },
-    "task-2": { id: "task-2", content: "Watch my favorite show" },
-    "task-3": { id: "task-3", content: "Charge my phone" },
-    "task-4": { id: "task-4", content: "Cook dinner" },
-  },
-  columns: {
-    "column-1": {
-      id: "column-1",
-      title: "To do",
-      taskIds: ["task-1", "task-2", "task-3", "task-4"],
-    },
-  },
-  // Facilitate reordering of the columns
-  columnOrder: ["column-1"],
-}
-
-type D = typeof initialData
-
-const list = ["hello", "good bye"]
-const list2 = ["hello", "good bye"]
-const list3 = ["hello", "good bye"] as const
-
-type ListType = typeof list
-type ListType2 = typeof list2[number]
-type ListType3 = typeof list3[number]
-
-const countries = [
-  {
-    country: "pl",
-    language: "Polish",
-  },
-  {
-    country: "se",
-    language: "Swedish",
-  },
-] as const
-
-type Country = typeof countries[number]["country"]
-type CountryLang = typeof countries[number]["language"]
-
-const currencySymbols = {
-  GBP: "£",
-  USD: "$",
-  EUR: "€",
-}
-
-type Currency = typeof currencySymbols
-type Currency2 = keyof typeof currencySymbols
-
-const foo = ["text 1", "text 2"] as const
-// is the same as
-// This will fail in React!!!
-const bar = <const>["text 1", "text 2"]
-```
-
-## unknown type <a name = "unknown"></a>
-
-unknown type stays unknown until you make any type guard/ type check on just that property.
-For example :
-
-```ts
-interface Comment {
-  date: Date
-  text: string
-}
-
-let service: unknown
-
-const response = service
-
-if (typeof response === "string") {
-  console.log(response.toUpperCase())
-} else if (typeof response === "number") {
-  console.log(response + 10)
-}
-
-// response + 20; // TS will not like this
-```
-
-[Top](#top) 🔼
-
-## Mapped types <a name = "mapped-types"> </a>
-
-```ts
-type Score = {
-  x: number
-  y: number
-}
-
-type ImmutableScore = Readonly<Score>
-
-type ImmutableScore2 = {
-  readonly [key in keyof Score]: number
-}
-
-type ImmutableType<T> = {
-  readonly [key in keyof T]: T[key]
-}
-
-const score: ImmutableType<Score> = {
-  x: 22,
-  y: 323,
-}
-
-score.x = 5555
-```
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
