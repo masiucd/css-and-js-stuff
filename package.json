@@ -4,13 +4,21 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "yarn make-tags-sitemap",
     "build": "next build",
     "start": "next start",
     "test": "jest --watch",
     "test:ci": "jest --ci --reporters='default' --reporters='./jest/json-reporter'",
     "e2e": "start-test dev 3000 cy:open",
+    "cy:open": "cypress open",
+    "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100",
+    "format": "yarn format:index && yarn format:src",
     "format:index": "prettier --write \"*.{js,ts,json,md}\"",
     "format:src": "prettier --write \"src/**/*.{js,ts,tsx,md,mdx}\"",
+    "analyze": "ANALYZE=true next build",
+    "make-tags-sitemap": "NODE_ENV=production node tags-sitemap.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook --no-dll",
     "lint": "eslint --ext ts --ext tsx --fix src/"
   },
   "dependencies": {
@@ -18,17 +26,22 @@
     "@emotion/react": "^11.4.0",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
-    "@mdx-js/loader": "^1.6.22",
-    "@next/mdx": "^10.2.0",
     "next": "10.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
     "@types/react": "^17.0.5",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "prettier": "^2.3.0",
+    "storybook-addon-themes": "^6.1.0",
     "typescript": "^4.2.4"
   },
   "husky": {
