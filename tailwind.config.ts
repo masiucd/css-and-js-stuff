@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: colors.cyan,
+        primary: colors.indigo,
         gray: colors.slate,
       },
     },
