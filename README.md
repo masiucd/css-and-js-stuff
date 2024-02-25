@@ -4,6 +4,8 @@
 
 A social app for travelers to share their experiences and tips about places they have visited.
 
+[App-url](https://trip-talks.vercel.app/)
+
 ## Stack
 
 - [React](https://reactjs.org/)

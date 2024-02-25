@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import Link from "@/components/link";
 import {PageWrapper} from "@/components/page-wrapper";
+import {sql} from "@/db/client";
 
 let exampleTrips = [
   {
@@ -50,7 +51,9 @@ let exampleTrips = [
   },
 ];
 
-function HomePage() {
+async function HomePage() {
+  let rows = await sql`SELECT * FROM users`;
+  console.log("rows", rows);
   return (
     <PageWrapper>
       <aside className="mb-10">
