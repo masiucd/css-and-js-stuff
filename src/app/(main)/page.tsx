@@ -1,6 +1,7 @@
 import {Box, Heading, Text} from "@radix-ui/themes";
 import {format} from "date-fns";
 import Image from "next/image";
+import {z} from "zod";
 
 import Link from "@/components/link";
 import {PageWrapper} from "@/components/page-wrapper";
@@ -51,9 +52,30 @@ let exampleTrips = [
   },
 ];
 
+let TripSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  description: z.string(),
+  image: z.string(),
+  created_at: z.date(),
+});
+const ADMIN_ID = 1;
+async function getTrips() {
+  let rows = await sql`select t.id,
+                          t.name,
+                          t.description,
+                          t.image,
+                          t.created_at
+                            from trips t
+                            where t.user_id = ${ADMIN_ID}
+                            limit 6`;
+
+  return TripSchema.array().parse(rows);
+}
+
 async function HomePage() {
-  let rows = await sql`SELECT * FROM users`;
-  console.log("rows", rows);
+  let trips = await getTrips();
+
   return (
     <PageWrapper>
       <aside className="mb-10">
@@ -73,23 +95,23 @@ async function HomePage() {
           Popular Trips
         </Heading>
         <ul className="grid  grid-cols-1  gap-10  p-5 sm:grid-cols-2 md:grid-cols-3">
-          {exampleTrips.map((trip) => (
+          {trips.map((trip) => (
             <li key={trip.id} className="rounded-md bg-gray-100 shadow-sm">
               <Image
                 src={`/images/${trip.image}.jpeg`}
-                alt={trip.title}
+                alt={trip.name}
                 className="mb-2  h-40 w-full  rounded-md  object-cover object-right md:h-[20rem]"
                 width={500}
                 height={500}
               />
               <Box className="p-2">
-                <Link href={`/trips/${slugify(trip.title)}`}>
+                <Link href={`/trips/${slugify(trip.name)}`}>
                   <Heading as="h3" size="5">
-                    {trip.title}
+                    {trip.name}
                   </Heading>
                 </Link>
                 <Text as="p">{trip.description}</Text>
-                <Text as="p">{format(trip.date, "MMMM do, yyyy")}</Text>
+                <Text as="p">{format(trip.created_at, "MMMM do, yyyy")}</Text>
               </Box>
             </li>
           ))}
