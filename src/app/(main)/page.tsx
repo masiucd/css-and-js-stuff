@@ -7,51 +7,6 @@ import Link from "@/components/link";
 import {PageWrapper} from "@/components/page-wrapper";
 import {sql} from "@/db/client";
 
-let exampleTrips = [
-  {
-    id: 1,
-    title: "My trip to Paris",
-    description: "A trip to Paris with my friends",
-    image: "paris",
-    date: "2024-07-01",
-  },
-  {
-    id: 2,
-    title: "Hiking in the mountains",
-    description: "A trip to the mountains with my family",
-    image: "mountains",
-    date: "2024-07-15",
-  },
-  {
-    id: 3,
-    title: "A weekend in London",
-    description: "A weekend trip to London with my partner",
-    image: "london",
-    date: "2023-08-01",
-  },
-  {
-    id: 4,
-    title: "A week in New York",
-    description: "A week in New York with my partner",
-    image: "new-york",
-    date: "2022-08-15",
-  },
-  {
-    id: 5,
-    title: "A trip to Tokyo",
-    description: "A trip to Tokyo with my friends",
-    image: "tokyo",
-    date: "2020-09-01",
-  },
-  {
-    id: 6,
-    title: "A trip to Rome",
-    description: "A trip to Rome with my friends",
-    image: "rome",
-    date: "2024-09-15",
-  },
-];
-
 let TripSchema = z.object({
   id: z.number(),
   name: z.string(),
