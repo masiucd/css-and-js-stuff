@@ -1,5 +1,6 @@
 import {type ReactNode} from "react";
 
+import Link from "@/components/link";
 import {siteData} from "@/config/site-data";
 
 export default function RootLayout({
@@ -9,16 +10,18 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <header className="h-[5rem]">
-        <div className="app-width mx-auto">
-          <strong>{siteData.title}</strong>
+      <header className="flex h-[5rem]">
+        <div className="app-width mx-auto flex w-full flex-1 items-center ">
+          <Link href="/" size="5">
+            <strong>{siteData.title}</strong>
+          </Link>
         </div>
       </header>
       <main className="flex min-h-[calc(100dvh-10rem)] flex-col">
         {children}
       </main>
-      <footer className="h-[5rem]">
-        <div className="app-width mx-auto flex items-center gap-2">
+      <footer className="flex h-[5rem] ">
+        <div className="app-width mx-auto flex w-full flex-1 items-center gap-2">
           <strong>
             © {new Date().getFullYear()} {siteData.title}. All rights reserved.
           </strong>

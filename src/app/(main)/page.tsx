@@ -42,7 +42,7 @@ async function HomePage() {
         </Text>
         <aside className="flex gap-2">
           <Link href="/login">Login</Link>
-          <Link href="/register">Register</Link>
+          <Link href="/trips">Trips</Link>
         </aside>
       </aside>
       <section>

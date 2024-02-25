@@ -22,7 +22,6 @@ let prodConfig = {
 };
 
 const sql = postgres(
-  // process.env.NODE_ENV === "production" ? prodConfig : localConfig
   process.env.NODE_ENV === "production" ? prodConfig : localConfig,
 );
 

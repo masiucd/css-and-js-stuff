@@ -10,6 +10,7 @@ type RadixLinkProps = Omit<
   ComponentPropsWithoutRef<typeof RadixLink>,
   NextLinkKeys
 >;
+
 type NextLinkProps = Pick<
   ComponentPropsWithoutRef<typeof NextLink>,
   NextLinkKeys
