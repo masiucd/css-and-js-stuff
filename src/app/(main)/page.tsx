@@ -4,6 +4,7 @@ import {z} from "zod";
 
 import Link from "@/components/link";
 import {PageWrapper} from "@/components/page-wrapper";
+import {H1, H3, Lead, Muted, P} from "@/components/typography";
 import {sql} from "@/db/client";
 
 let TripSchema = z.object({
@@ -33,15 +34,15 @@ async function HomePage() {
   return (
     <PageWrapper>
       <aside className="mb-10">
-        <h1>Trip Talks</h1>
-        <p>Welcome to Trip Talks, a social network for travelers.</p>
+        <H1>Trip Talks</H1>
+        <P>Welcome to Trip Talks, a social network for travelers.</P>
         <aside className="flex gap-2">
           <Link href="/login">Login</Link>
           <Link href="/trips">Trips</Link>
         </aside>
       </aside>
       <section>
-        <h1 className="mb-5">Popular Trips</h1>
+        <H3 className="mb-5">Popular Trips</H3>
         <ul className="grid  grid-cols-1  gap-10  p-5 sm:grid-cols-2 md:grid-cols-3">
           {trips.map((trip) => (
             <li key={trip.id} className="rounded-md bg-gray-100 shadow-sm">
@@ -52,12 +53,14 @@ async function HomePage() {
                 width={500}
                 height={500}
               />
-              <div>
+              <div className="p-3">
                 <Link href={`/trips/${slugify(trip.name)}`}>
-                  <h3>{trip.name}</h3>
+                  <Lead>{trip.name}</Lead>
                 </Link>
-                <p>{trip.description}</p>
-                <p>{format(trip.created_at, "MMMM do, yyyy")}</p>
+                <Muted className="text-gray-500">{trip.description}</Muted>
+                <Muted className="text-gray-500">
+                  {format(trip.created_at, "MMMM do, yyyy")}
+                </Muted>
               </div>
             </li>
           ))}
