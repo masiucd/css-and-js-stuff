@@ -1,4 +1,3 @@
-import {Heading, Text} from "@radix-ui/themes";
 import {type Metadata} from "next";
 
 export const metadata: Metadata = {
@@ -10,10 +9,8 @@ export default function LoginPage() {
   return (
     <section className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center border border-red-500">
       <aside className="mb-10 w-full border border-red-500">
-        <Heading as="h1" size="6">
-          Login
-        </Heading>
-        <Text as="p">Login to your account.</Text>
+        <h1>Login</h1>
+        <p>Login to your account.</p>
       </aside>
       <form action="" className="w-full px-20">
         <fieldset className="flex flex-col gap-2">

@@ -1,4 +1,3 @@
-import {Box, Heading, Text} from "@radix-ui/themes";
 import {format} from "date-fns";
 import Image from "next/image";
 import {z} from "zod";
@@ -34,21 +33,15 @@ async function HomePage() {
   return (
     <PageWrapper>
       <aside className="mb-10">
-        <Heading as="h1" size="9">
-          Trip Talks
-        </Heading>
-        <Text as="p">
-          Welcome to Trip Talks, a social network for travelers.
-        </Text>
+        <h1>Trip Talks</h1>
+        <p>Welcome to Trip Talks, a social network for travelers.</p>
         <aside className="flex gap-2">
           <Link href="/login">Login</Link>
           <Link href="/trips">Trips</Link>
         </aside>
       </aside>
       <section>
-        <Heading as="h2" size="7" className="mb-5">
-          Popular Trips
-        </Heading>
+        <h1 className="mb-5">Popular Trips</h1>
         <ul className="grid  grid-cols-1  gap-10  p-5 sm:grid-cols-2 md:grid-cols-3">
           {trips.map((trip) => (
             <li key={trip.id} className="rounded-md bg-gray-100 shadow-sm">
@@ -59,15 +52,13 @@ async function HomePage() {
                 width={500}
                 height={500}
               />
-              <Box className="p-2">
+              <div>
                 <Link href={`/trips/${slugify(trip.name)}`}>
-                  <Heading as="h3" size="5">
-                    {trip.name}
-                  </Heading>
+                  <h3>{trip.name}</h3>
                 </Link>
-                <Text as="p">{trip.description}</Text>
-                <Text as="p">{format(trip.created_at, "MMMM do, yyyy")}</Text>
-              </Box>
+                <p>{trip.description}</p>
+                <p>{format(trip.created_at, "MMMM do, yyyy")}</p>
+              </div>
             </li>
           ))}
         </ul>
