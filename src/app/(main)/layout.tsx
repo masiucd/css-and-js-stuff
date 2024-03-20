@@ -11,27 +11,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <header className="flex h-[5rem]">
-        <div className="app-width mx-auto flex w-full flex-1 items-center justify-between">
-          <Link href="/" className="transition-opacity hover:opacity-50">
-            <strong>{siteData.title}</strong>
-          </Link>
-          <nav>
-            <ul className="flex gap-2">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    className="opacity-50 hover:opacity-100 focus:opacity-100 active:opacity-100"
-                    href={link.href}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </header>
+      <Header />
       <main className="flex min-h-[calc(100dvh-10rem)] flex-col">
         {children}
       </main>
@@ -59,6 +39,42 @@ export default function RootLayout({
         </div>
       </footer>
     </>
+  );
+}
+
+function Header() {
+  return (
+    <header className="flex h-[5rem]">
+      <div className="app-width mx-auto flex w-full flex-1 items-center justify-between">
+        <Link href="/" className="transition-opacity hover:opacity-50">
+          <strong className="text-xl font-bold capitalize leading-none opacity-80 hover:opacity-100 focus:opacity-100 active:opacity-100">
+            {siteData.title}
+          </strong>
+        </Link>
+        <nav>
+          <ul className="flex gap-2">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
+                  href={link.href}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                href="/login"
+                className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
+              >
+                <span>Login</span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
   );
 }
 
