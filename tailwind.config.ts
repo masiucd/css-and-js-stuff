@@ -13,6 +13,9 @@ const config: Config = {
         primary: colors.indigo,
         gray: colors.slate,
       },
+      backgroundImage: {
+        "hero-pattern": "url('/images/iii.jpg')",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],
