@@ -91,15 +91,11 @@ export function Small({children, className}: Props) {
 }
 
 export function Lead({children, className}: Props) {
-  return (
-    <p className={cn("text-xl text-muted-foreground", className)}>{children}</p>
-  );
+  return <p className={cn("text-xl ", className)}>{children}</p>;
 }
 
 export function Muted({children, className}: Props) {
-  return (
-    <p className={cn("text-sm text-muted-foreground", className)}>{children}</p>
-  );
+  return <p className={cn("text-sm ", className)}>{children}</p>;
 }
 
 export function Large({children, className}: Props) {
