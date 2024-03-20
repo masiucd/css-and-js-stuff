@@ -13,6 +13,7 @@ let TripSchema = z.object({
   description: z.string(),
   image: z.string(),
   created_at: z.date(),
+  author: z.string(),
 });
 const ADMIN_ID = 1;
 async function getTrips() {
@@ -20,9 +21,11 @@ async function getTrips() {
                           t.name,
                           t.description,
                           t.image,
-                          t.created_at
+                          t.created_at,
+                          u.username as author
                             from trips t
-                            where t.user_id = ${ADMIN_ID}
+                            inner join users u on t.user_id = ${ADMIN_ID}
+                            order by t.created_at desc
                             limit 3`;
 
   return TripSchema.array().parse(rows);
@@ -70,21 +73,20 @@ function TripItem({trip}: {trip: z.infer<typeof TripSchema>}) {
           </Link>
           <p className="text-gray-500/80">{trip.description}</p>
         </div>
-
-        <Avatar person={{name: "Bob"}} />
+        <Avatar trip={trip} />
       </div>
     </li>
   );
 }
 
-function Avatar({person}: {person: any}) {
-  let {name} = person;
+function Avatar({trip}: {trip: z.infer<typeof TripSchema>}) {
+  let {author, created_at} = trip;
   return (
     <div className="flex max-w-48 items-center gap-5 ">
       <div className="relative size-12 rounded-full bg-gray-300" />
       <div className="flex flex-col gap-1">
-        <p>{name}</p>
-        <p className="text-gray-500/80">{format(new Date(), "MMM do, yyyy")}</p>
+        <p>{author}</p>
+        <p className="text-gray-500/80">{format(created_at, "MMM do, yyyy")}</p>
       </div>
     </div>
   );
