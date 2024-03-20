@@ -2,9 +2,10 @@ import {format} from "date-fns";
 import Image from "next/image";
 import {z} from "zod";
 
+import {Icons} from "@/components/icons";
 import Link from "@/components/link";
 import {PageWrapper} from "@/components/page-wrapper";
-import {H1, H3, P} from "@/components/typography";
+import {H1, P} from "@/components/typography";
 import {sql} from "@/db/client";
 
 let TripSchema = z.object({
@@ -33,20 +34,24 @@ async function getTrips() {
 
 async function HomePage() {
   let trips = await getTrips();
-
   return (
     <PageWrapper>
-      <aside className="mb-10">
-        <H1>Trip Talks</H1>
-        <P>Welcome to Trip Talks, a social network for travelers.</P>
-        <aside className="flex gap-2">
-          <Link href="/login">Login</Link>
-          <Link href="/trips">Trips</Link>
-        </aside>
+      <aside className="relative mb-10 flex min-h-[55dvh] items-center rounded-md bg-hero-pattern bg-cover bg-center shadow-md">
+        <div className="flex flex-col gap-2  p-2">
+          <H1 className="capitalize">Never stop exploring</H1>
+          <P className="opacity-60 ">
+            Welcome to Trip Talks, a social network for travelers
+          </P>
+          <Link
+            className="w-48 rounded-md bg-gray-900/80 px-4 py-2 text-white transition-colors hover:bg-primary-500/90"
+            href="/trips"
+          >
+            Explore destinations
+          </Link>
+        </div>
       </aside>
-      <section>
-        <H3 className="mb-5">Popular Trips</H3>
-        <ul className="grid  grid-cols-1  gap-10  p-5 sm:grid-cols-2 md:grid-cols-3">
+      <section className="h-[320px]">
+        <ul className="absolute  bottom-0  grid  grid-cols-1 gap-10 p-5 sm:grid-cols-2 md:grid-cols-3">
           {trips.map((trip) => (
             <TripItem key={trip.id} trip={trip} />
           ))}
@@ -83,9 +88,11 @@ function Avatar({trip}: {trip: z.infer<typeof TripSchema>}) {
   let {author, created_at} = trip;
   return (
     <div className="flex max-w-48 items-center gap-5 ">
-      <div className="relative size-12 rounded-full bg-gray-300" />
+      <div className="relative flex size-12 items-center justify-center rounded-full bg-gray-300">
+        <Icons.personStanding size={32} />
+      </div>
       <div className="flex flex-col gap-1">
-        <p>{author}</p>
+        <p className="text-sm font-semibold capitalize opacity-60">{author}</p>
         <p className="text-gray-500/80">{format(created_at, "MMM do, yyyy")}</p>
       </div>
     </div>

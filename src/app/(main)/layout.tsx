@@ -12,10 +12,24 @@ export default function RootLayout({
   return (
     <>
       <header className="flex h-[5rem]">
-        <div className="app-width mx-auto flex w-full flex-1 items-center ">
-          <Link href="/">
+        <div className="app-width mx-auto flex w-full flex-1 items-center justify-between">
+          <Link href="/" className="transition-opacity hover:opacity-50">
             <strong>{siteData.title}</strong>
           </Link>
+          <nav>
+            <ul className="flex gap-2">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    className="opacity-50 hover:opacity-100 focus:opacity-100 active:opacity-100"
+                    href={link.href}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </header>
       <main className="flex min-h-[calc(100dvh-10rem)] flex-col">
@@ -47,3 +61,22 @@ export default function RootLayout({
     </>
   );
 }
+
+let navLinks = Object.freeze([
+  {
+    href: "/destinations",
+    label: "Destinations",
+  },
+  {
+    href: "/tours",
+    label: "Tours",
+  },
+  {
+    href: "/about",
+    label: "About",
+  },
+  {
+    href: "/contact",
+    label: "Contact",
+  },
+]);
