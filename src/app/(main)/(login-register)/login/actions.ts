@@ -3,24 +3,9 @@ import "server-only";
 
 import {compare} from "bcrypt";
 import {redirect} from "next/navigation";
-import {z} from "zod";
 
-import {sql} from "@/db/client";
+import {getUserByEmail} from "@/db/queries/user/q";
 import {setSession} from "@/lib/session";
-
-let userByEmailSchema = z.object({
-  id: z.number(),
-  email: z.string(),
-  password: z.string(),
-});
-async function getUserByEmail(email: string) {
-  let rows = await sql`
-                select u.id, u.email, u.password
-                from users u
-                where u.email = ${email}
-  `;
-  return userByEmailSchema.safeParse(rows[0]);
-}
 
 async function comparePassword(password: string, hashedPassword: string) {
   return await compare(password, hashedPassword);
