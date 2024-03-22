@@ -6,6 +6,7 @@ import {redirect} from "next/navigation";
 import {z} from "zod";
 
 import {sql} from "@/db/client";
+import {setSession} from "@/lib/session";
 
 let userByEmailSchema = z.object({
   id: z.number(),
@@ -35,7 +36,6 @@ export async function login(prevState: any, formData: FormData) {
   let userResult = await getUserByEmail(email);
 
   if (!userResult.success) {
-    // throw new Error("Invalid email or password");
     return {
       status: 404,
       message: "Invalid email or password",
@@ -43,18 +43,15 @@ export async function login(prevState: any, formData: FormData) {
   }
   let user = userResult.data;
   let passwordMatch = await comparePassword(password, user.password);
-  console.log("🚀 ~ login ~ passwordMatch:", passwordMatch);
   if (!passwordMatch) {
-    // throw new Error("Invalid email or password");
     return {
       status: 404,
       message: "Invalid email or password",
     };
   }
-  //1. check if user exists in DB
-  //2. if user exists, check if password is correct
 
-  //3. if password is correct, create a session
-  //4. redirect to dashboard/profile
-  redirect("/dashboard");
+  await setSession(email);
+  redirect("/profile");
+
+  redirect("/profile");
 }

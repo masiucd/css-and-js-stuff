@@ -11,7 +11,6 @@ let initialState = {
 
 export function LoginForm() {
   let [state, formAction] = useFormState(login, initialState);
-  console.log("state", state);
   return (
     <form action={formAction} className="w-full border border-green-500 px-20 ">
       <fieldset className="flex flex-col gap-2">
@@ -23,6 +22,11 @@ export function LoginForm() {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" required />
         </div>
+        <div className="mb-2 h-3">
+          {state.status !== 200 && (
+            <p className="text-sm text-red-500">{state.message}</p>
+          )}
+        </div>
         <div>
           <button
             className="h-10 min-w-16 rounded-md bg-gray-900 px-2 py-1 font-semibold text-gray-100  shadow-md transition-all duration-150 hover:bg-primary-500"
@@ -32,8 +36,8 @@ export function LoginForm() {
           </button>
         </div>
       </fieldset>
-      <small className="mt-3 block">
-        Don&apos;t have an account?{" "}
+      <small className="mt-3 flex gap-1">
+        <span>Don&apos;t have an account?</span>
         <Link href="/register" className="text-primary-500 hover:opacity-45">
           Register
         </Link>
