@@ -3,6 +3,7 @@ import {type ReactNode} from "react";
 import Link from "@/components/link";
 import {Small} from "@/components/typography";
 import {siteData} from "@/config/site-data";
+import {getSession} from "@/lib/session";
 
 export default function RootLayout({
   children,
@@ -42,7 +43,8 @@ export default function RootLayout({
   );
 }
 
-function Header() {
+async function Header() {
+  let session = await getSession();
   return (
     <header className="flex h-[5rem]">
       <div className="app-width mx-auto flex w-full flex-1 items-center justify-between">
@@ -63,14 +65,16 @@ function Header() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                href="/login"
-                className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
-              >
-                <span>Login</span>
-              </Link>
-            </li>
+            {!session && (
+              <li>
+                <Link
+                  href="/login"
+                  className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
+                >
+                  <span>Login</span>
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
       </div>

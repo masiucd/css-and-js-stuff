@@ -25,3 +25,7 @@ function getExpires(seconds: number = 3600): Date {
   let milliseconds = 1000;
   return new Date(Date.now() + seconds * milliseconds); // 1 hour
 }
+
+export async function destroySession() {
+  cookies().delete(sessionName);
+}
