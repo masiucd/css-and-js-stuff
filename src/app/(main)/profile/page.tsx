@@ -1,4 +1,5 @@
 import {redirect} from "next/navigation";
+import {type PropsWithChildren} from "react";
 import {z} from "zod";
 
 import {PageWrapper} from "@/components/page-wrapper";
@@ -7,38 +8,60 @@ import {getUserProfileByEmail} from "@/db/queries/user/q";
 import {getSession} from "@/lib/session";
 
 import {logout} from "./actions";
+import ViewTripsModal from "./view-tripts-modal";
 
 export default async function ProfilePage() {
   let user = await getProfile();
   return (
     <PageWrapper>
-      <H1>
-        Welcome, {user.first} {user.last}
-      </H1>
-      <ul className="mb-5 flex flex-col gap-2">
-        <li className="capitalize">
-          <span>username:</span> <span>{user.username}</span>{" "}
-        </li>
-        <li className="capitalize">
-          <span>email:</span> <span>{user.email}</span>{" "}
-        </li>
-        <li className="capitalize">
-          <span>First name:</span> <span>{user.first}</span>{" "}
-        </li>
-        <li className="capitalize">
-          <span>Last name:</span> <span>{user.last}</span>{" "}
-        </li>
-      </ul>
-      <form action={logout}>
-        <button
-          className="rounded bg-gray-900 px-4 py-2 font-bold text-white hover:bg-primary-700"
-          type="submit"
-        >
-          logout
-        </button>
-      </form>
+      <aside className="mb-5">
+        <H1>
+          Welcome, {user.first} {user.last}!
+        </H1>
+      </aside>
+      <section className="flex justify-between">
+        <div className="flex flex-col gap-2">
+          <ul className="mb-5 flex flex-col gap-2">
+            <ListItem>
+              <ListItemTitle>username</ListItemTitle>
+              <span>{user.username}</span>
+            </ListItem>
+            <ListItem>
+              <ListItemTitle>email</ListItemTitle> <span>{user.email}</span>
+            </ListItem>
+            <ListItem>
+              <ListItemTitle>First name</ListItemTitle>
+              <span>{user.first}</span>
+            </ListItem>
+            <ListItem>
+              <ListItemTitle>Last name</ListItemTitle> <span>{user.last}</span>
+            </ListItem>
+            <ListItem>
+              <ListItemTitle>Saved trips</ListItemTitle>
+              <span>{user.trips}</span>
+            </ListItem>
+          </ul>
+          <ViewTripsModal />
+        </div>
+        <form action={logout}>
+          <button
+            className="rounded bg-gray-900/80 px-4 py-2 font-bold capitalize text-white hover:bg-primary-700"
+            type="submit"
+          >
+            logout
+          </button>
+        </form>
+      </section>
     </PageWrapper>
   );
+}
+
+function ListItem({children}: PropsWithChildren) {
+  return <li className="flex gap-1 capitalize">{children}</li>;
+}
+
+function ListItemTitle({children}: PropsWithChildren) {
+  return <span className="min-w-28 font-semibold">{children}:</span>;
 }
 
 async function getProfile() {
@@ -52,6 +75,7 @@ async function getProfile() {
   }
   let {data} = result;
   let user = await getUserProfileByEmail(data.email);
+
   if (!user) {
     throw new Error("User not found");
   }

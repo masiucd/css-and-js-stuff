@@ -65,13 +65,22 @@ async function Header() {
                 </Link>
               </li>
             ))}
-            {!session && (
+            {!session ? (
               <li>
                 <Link
                   href="/login"
                   className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
                 >
                   <span>Login</span>
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <Link
+                  href="/profile"
+                  className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
+                >
+                  <span>Profile</span>
                 </Link>
               </li>
             )}
