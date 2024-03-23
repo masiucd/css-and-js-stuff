@@ -8,7 +8,7 @@ import {getUserProfileByEmail} from "@/db/queries/user/q";
 import {getSession} from "@/lib/session";
 
 import {logout} from "./actions";
-import ViewTripsModal from "./view-tripts-modal";
+import {ViewTripsDialog} from "./view-trips-dialog";
 
 export default async function ProfilePage() {
   let user = await getProfile();
@@ -41,7 +41,7 @@ export default async function ProfilePage() {
               <span>{user.trips}</span>
             </ListItem>
           </ul>
-          <ViewTripsModal />
+          <ViewTripsDialog />
         </div>
         <form action={logout}>
           <button
