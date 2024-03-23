@@ -8,6 +8,7 @@ import {getUserProfileByEmail} from "@/db/queries/user/q";
 import {getSession} from "@/lib/session";
 
 import {logout} from "./actions";
+import {Content} from "./dialog-content";
 import {ViewTripsDialog} from "./view-trips-dialog";
 
 export default async function ProfilePage() {
@@ -41,7 +42,9 @@ export default async function ProfilePage() {
               <span>{user.trips}</span>
             </ListItem>
           </ul>
-          <ViewTripsDialog />
+          <ViewTripsDialog>
+            <Content userId={user.id} />
+          </ViewTripsDialog>
         </div>
         <form action={logout}>
           <button
