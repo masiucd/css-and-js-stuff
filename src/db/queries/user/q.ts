@@ -46,3 +46,18 @@ export async function getUserProfileByEmail(email: string) {
   }
   return user.data;
 }
+
+let myTripsSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  description: z.string(),
+  image: z.string(),
+});
+export async function getTripsByUserId(id: number) {
+  let rows = await sql`
+  select t.id, t.name, t.description, t.image
+  from trips t
+  where t.user_id = ${id};
+    `;
+  return myTripsSchema.array().safeParse(rows);
+}
