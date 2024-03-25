@@ -1,13 +1,10 @@
 import Link from "next/link";
-import {redirect} from "next/navigation";
 import {type PropsWithChildren} from "react";
-import {z} from "zod";
 
 import {PageWrapper} from "@/components/page-wrapper";
 import {H1} from "@/components/typography";
-import {getUserProfileByEmail} from "@/db/queries/user/q";
+import {getProfile} from "@/handlers/user";
 import {cn} from "@/lib/cn";
-import {getSession} from "@/lib/session";
 
 import {logout} from "./actions";
 import {Content} from "./dialog-content";
@@ -78,28 +75,3 @@ function ListItem({
 function ListItemTitle({children}: PropsWithChildren) {
   return <span className="min-w-28 font-semibold">{children}:</span>;
 }
-
-async function getProfile() {
-  let session = await getSession();
-  if (!session) {
-    redirect("/login");
-  }
-  let result = sessionSchema.safeParse(session);
-  if (!result.success) {
-    throw new Error("Invalid session");
-  }
-  let {data} = result;
-  let user = await getUserProfileByEmail(data.email);
-
-  if (!user) {
-    throw new Error("User not found");
-  }
-  return user;
-}
-
-let sessionSchema = z.object({
-  email: z.string(),
-  expires: z.string(),
-  iat: z.number(),
-  exp: z.number(),
-});
