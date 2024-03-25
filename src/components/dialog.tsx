@@ -1,26 +1,43 @@
 "use client";
 
 import * as RadixDialog from "@radix-ui/react-dialog";
-import {type PropsWithChildren} from "react";
+import {type PropsWithChildren, type ReactNode} from "react";
 
 import {cn} from "@/lib/cn";
+
+type DialogTriggerProps =
+  | {
+      triggerComponent: ReactNode;
+      triggerText?: never;
+    }
+  | {
+      triggerComponent?: never;
+      triggerText: string;
+    };
 
 export function Dialog({
   children,
   className,
   triggerText,
-}: PropsWithChildren<{className?: string; triggerText: string}>) {
+  triggerComponent,
+}: PropsWithChildren<
+  {
+    className?: string;
+  } & DialogTriggerProps
+>) {
   return (
     <RadixDialog.Root>
       <RadixDialog.Trigger asChild>
-        <button
-          className={cn(
-            "rounded bg-gray-900/80 px-4 py-2 font-bold text-white hover:bg-primary-700",
-            className,
-          )}
-        >
-          {triggerText}
-        </button>
+        {triggerComponent ?? (
+          <button
+            className={cn(
+              "rounded bg-gray-900/80 px-4 py-2 font-bold text-white hover:bg-primary-700",
+              className,
+            )}
+          >
+            {triggerText}
+          </button>
+        )}
       </RadixDialog.Trigger>
       <RadixDialog.Portal>
         <RadixDialog.Overlay className="fixed inset-0 bg-gray-900/55" />
@@ -34,7 +51,7 @@ export function Dialog({
 
 function Title({children, className}: PropsWithChildren<{className?: string}>) {
   return (
-    <RadixDialog.Title asChild className={cn("", className)}>
+    <RadixDialog.Title asChild className={cn("mb-2", className)}>
       {children}
     </RadixDialog.Title>
   );
@@ -44,7 +61,7 @@ function Description({
   className,
 }: PropsWithChildren<{className?: string}>) {
   return (
-    <RadixDialog.Description asChild className={cn("", className)}>
+    <RadixDialog.Description asChild className={cn("mb-2", className)}>
       {children}
     </RadixDialog.Description>
   );

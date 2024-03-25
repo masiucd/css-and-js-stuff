@@ -5,6 +5,7 @@ import {z} from "zod";
 import {PageWrapper} from "@/components/page-wrapper";
 import {H1} from "@/components/typography";
 import {getUserProfileByEmail} from "@/db/queries/user/q";
+import {cn} from "@/lib/cn";
 import {getSession} from "@/lib/session";
 
 import {logout} from "./actions";
@@ -39,12 +40,13 @@ export default async function ProfilePage() {
             </ListItem>
             <ListItem>
               <ListItemTitle>Saved trips</ListItemTitle>
-              <span>{user.trips}</span>
+              <div className="flex gap-2">
+                <ViewTripsDialog totalTrips={Number(user.trips)}>
+                  <Content userId={user.id} />
+                </ViewTripsDialog>
+              </div>
             </ListItem>
           </ul>
-          <ViewTripsDialog>
-            <Content userId={user.id} />
-          </ViewTripsDialog>
         </div>
         <form action={logout}>
           <button
@@ -59,8 +61,11 @@ export default async function ProfilePage() {
   );
 }
 
-function ListItem({children}: PropsWithChildren) {
-  return <li className="flex gap-1 capitalize">{children}</li>;
+function ListItem({
+  children,
+  className,
+}: PropsWithChildren<{className?: string}>) {
+  return <li className={cn("flex gap-1 capitalize", className)}>{children}</li>;
 }
 
 function ListItemTitle({children}: PropsWithChildren) {

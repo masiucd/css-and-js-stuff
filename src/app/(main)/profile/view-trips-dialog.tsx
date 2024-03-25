@@ -4,11 +4,22 @@ import {type PropsWithChildren} from "react";
 import {Dialog} from "@/components/dialog";
 import {H2, Lead} from "@/components/typography";
 
-export function ViewTripsDialog({children}: PropsWithChildren) {
-  console.log("ViewTripsDialog");
+export function ViewTripsDialog({
+  children,
+  totalTrips,
+}: PropsWithChildren<{totalTrips: number}>) {
   return (
     <>
-      <Dialog triggerText="View Trips">
+      <Dialog
+        triggerComponent={
+          <button
+            className="font-semibold underline hover:opacity-50"
+            type="button"
+          >
+            view trips ({totalTrips})
+          </button>
+        }
+      >
         <Dialog.Title>
           <H2>Your Trips</H2>
         </Dialog.Title>
