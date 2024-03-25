@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {redirect} from "next/navigation";
 import {type PropsWithChildren} from "react";
 import {z} from "zod";
@@ -47,6 +48,12 @@ export default async function ProfilePage() {
               </div>
             </ListItem>
           </ul>
+          <Link
+            className="underline decoration-2 underline-offset-2"
+            href="/destinations/new"
+          >
+            Create new destination
+          </Link>
         </div>
         <form action={logout}>
           <button

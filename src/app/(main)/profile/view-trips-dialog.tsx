@@ -2,7 +2,7 @@
 import {type PropsWithChildren} from "react";
 
 import {Dialog} from "@/components/dialog";
-import {H2, Lead} from "@/components/typography";
+import {H2} from "@/components/typography";
 
 export function ViewTripsDialog({
   children,
@@ -23,9 +23,7 @@ export function ViewTripsDialog({
         <Dialog.Title>
           <H2>Your Trips</H2>
         </Dialog.Title>
-        <Dialog.Description>
-          <Lead>Here are the trips yo&apos;ve saved.</Lead>
-        </Dialog.Description>
+
         {children}
         <div className="flex justify-end ">
           <Dialog.Close>

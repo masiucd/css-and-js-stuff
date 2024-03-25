@@ -6,7 +6,7 @@ import {getTripsByUserId} from "@/db/queries/user/q";
 
 async function getMyTrips(userId: number) {
   let res = await getTripsByUserId(userId);
-  console.log("🚀 ~ getMyTrips ~ res:", res);
+
   if (!res.success) {
     return [];
   }

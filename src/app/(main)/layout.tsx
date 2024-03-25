@@ -1,5 +1,6 @@
 import {type ReactNode} from "react";
 
+import {ActiveLink} from "@/components/active-link";
 import Link from "@/components/link";
 import {Small} from "@/components/typography";
 import {siteData} from "@/config/site-data";
@@ -57,31 +58,20 @@ async function Header() {
           <ul className="flex gap-2">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link
-                  className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
-                  href={link.href}
-                >
-                  {link.label}
-                </Link>
+                <ActiveLink href={link.href}>{link.label}</ActiveLink>
               </li>
             ))}
             {!session ? (
               <li>
-                <Link
-                  href="/login"
-                  className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
-                >
+                <ActiveLink href="/login">
                   <span>Login</span>
-                </Link>
+                </ActiveLink>
               </li>
             ) : (
               <li>
-                <Link
-                  href="/profile"
-                  className="opacity-60 hover:opacity-100 focus:opacity-100 active:opacity-100"
-                >
+                <ActiveLink href="/profile">
                   <span>Profile</span>
-                </Link>
+                </ActiveLink>
               </li>
             )}
           </ul>
