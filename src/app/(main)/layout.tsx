@@ -83,8 +83,8 @@ async function Header() {
 
 let navLinks = Object.freeze([
   {
-    href: "/destinations",
-    label: "Destinations",
+    href: "/trips",
+    label: "Trips",
   },
   {
     href: "/tours",
