@@ -36,7 +36,7 @@ async function HomePage() {
   let trips = await getTrips();
   return (
     <PageWrapper>
-      <aside className="relative mb-10 flex min-h-[55dvh] items-center rounded-md bg-hero-pattern bg-cover bg-center shadow-md">
+      <aside className=" mb-10 flex min-h-[55dvh] items-center rounded-md bg-hero-pattern bg-cover bg-center shadow-md">
         <div className="flex flex-col gap-2  p-2">
           <H1 className="capitalize">Never stop exploring</H1>
           <P className="opacity-60 ">
@@ -50,8 +50,8 @@ async function HomePage() {
           </Link>
         </div>
       </aside>
-      <section className="h-[320px]">
-        <ul className="absolute  bottom-0  grid  grid-cols-1 gap-10 p-5 sm:grid-cols-2 md:grid-cols-3">
+      <section className="border-2 md:my-[2rem]">
+        <ul className=" grid  grid-cols-1 gap-10 p-5 md:grid-cols-3">
           {trips.map((trip) => (
             <TripItem key={trip.id} trip={trip} />
           ))}

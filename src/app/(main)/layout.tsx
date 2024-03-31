@@ -17,29 +17,7 @@ export default function RootLayout({
       <main className="flex min-h-[calc(100dvh-10rem)] flex-col">
         {children}
       </main>
-      <footer className="flex h-[5rem] ">
-        <div className="app-width mx-auto flex w-full flex-1 items-center gap-2">
-          <Small className="flex gap-2">
-            <strong>
-              © {new Date().getFullYear()} {siteData.title}. All rights
-              reserved.
-            </strong>
-            <p>
-              Built with
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://nextjs.org"
-                className="mx-1"
-              >
-                <span className="text-primary-600 hover:underline focus:underline active:underline">
-                  Next.js
-                </span>
-              </a>
-            </p>
-          </Small>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
@@ -48,7 +26,7 @@ async function Header() {
   let session = await getSession();
   return (
     <header className="flex h-[5rem]">
-      <div className="app-width mx-auto flex w-full flex-1 items-center justify-between">
+      <div className="app-width mx-auto flex w-full flex-1 items-center justify-between px-2">
         <Link href="/" className="transition-opacity hover:opacity-50">
           <strong className="text-xl font-bold capitalize leading-none opacity-80 hover:opacity-100 focus:opacity-100 active:opacity-100">
             {siteData.title}
@@ -78,6 +56,33 @@ async function Header() {
         </nav>
       </div>
     </header>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="flex h-[5rem] ">
+      <div className="app-width mx-auto flex w-full flex-1 items-center gap-2 px-2">
+        <Small className="flex gap-2">
+          <strong>
+            © {new Date().getFullYear()} {siteData.title}. All rights reserved.
+          </strong>
+          <p>
+            Built with
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://nextjs.org"
+              className="mx-1"
+            >
+              <span className="text-primary-600 hover:underline focus:underline active:underline">
+                Next.js
+              </span>
+            </a>
+          </p>
+        </Small>
+      </div>
+    </footer>
   );
 }
 
