@@ -7,6 +7,7 @@ import Link from "@/components/link";
 import {PageWrapper} from "@/components/page-wrapper";
 import {H1, P} from "@/components/typography";
 import {sql} from "@/db/client";
+import {slugify} from "@/lib/string";
 
 let TripSchema = z.object({
   id: z.number(),
@@ -97,13 +98,6 @@ function Avatar({trip}: {trip: z.infer<typeof TripSchema>}) {
       </div>
     </div>
   );
-}
-
-function slugify(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
 }
 
 export default HomePage;

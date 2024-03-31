@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import {Lead, P} from "@/components/typography";
 import {getTripsByUserId} from "@/db/queries/user/q";
+import {slugify} from "@/lib/string";
 
 async function getMyTrips(userId: number) {
   let res = await getTripsByUserId(userId);
@@ -26,18 +27,18 @@ export async function Content({userId}: {userId: number}) {
             <Image
               src={`/images/${trip.image}.jpeg`}
               alt={trip.name}
-              className="size-32 rounded-md  object-cover shadow-sm lg:size-44 "
+              className="size-52 rounded-md  object-cover shadow-sm lg:size-52 "
               width={1000}
               height={1000}
             />
             <div className="py-2">
               <Link
-                href={`/trips/${trip.name}`}
-                className="text-sm font-semibold underline hover:opacity-50"
+                href={`/trips/${slugify(trip.id.toString())}`}
+                className="font-semibold hover:opacity-50"
               >
-                <Lead>{trip.name}</Lead>
+                <Lead className="text-base">{trip.name}</Lead>
               </Link>
-              <P className="text-pretty">{trip.description}</P>
+              <P className="text-pretty text-base">{trip.description}</P>
             </div>
           </li>
         ))}
