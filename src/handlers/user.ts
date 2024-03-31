@@ -29,6 +29,8 @@ export async function getProfile() {
   return user;
 }
 
+export type UserProfile = ReturnType<typeof getProfile>;
+
 let sessionSchema = z.object({
   email: z.string(),
   expires: z.string(),
