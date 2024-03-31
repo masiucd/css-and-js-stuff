@@ -24,17 +24,21 @@ export default async function ProfilePage() {
           <ul className="mb-5 flex flex-col gap-2">
             <ListItem>
               <ListItemTitle>username</ListItemTitle>
-              <span>{user.username}</span>
+              <ListItemValue>{user.username}</ListItemValue>
             </ListItem>
             <ListItem>
-              <ListItemTitle>email</ListItemTitle> <span>{user.email}</span>
+              <ListItemTitle>email</ListItemTitle>
+              <ListItemValue className="normal-case">
+                {user.email}
+              </ListItemValue>
             </ListItem>
             <ListItem>
               <ListItemTitle>First name</ListItemTitle>
-              <span>{user.first}</span>
+              <ListItemValue>{user.first}</ListItemValue>
             </ListItem>
             <ListItem>
-              <ListItemTitle>Last name</ListItemTitle> <span>{user.last}</span>
+              <ListItemTitle>Last name</ListItemTitle>{" "}
+              <ListItemValue>{user.last}</ListItemValue>
             </ListItem>
             <ListItem>
               <ListItemTitle>Saved trips</ListItemTitle>
@@ -46,8 +50,8 @@ export default async function ProfilePage() {
             </ListItem>
           </ul>
           <Link
-            className="underline decoration-2 underline-offset-2"
-            href="/destinations/new"
+            className="underline decoration-2 underline-offset-2 hover:opacity-50"
+            href="/trips/new"
           >
             Create new destination
           </Link>
@@ -74,4 +78,10 @@ function ListItem({
 
 function ListItemTitle({children}: PropsWithChildren) {
   return <span className="min-w-28 font-semibold">{children}:</span>;
+}
+function ListItemValue({
+  children,
+  className,
+}: PropsWithChildren<{className?: string}>) {
+  return <span className={cn("text-gray-700", className)}>{children}</span>;
 }
