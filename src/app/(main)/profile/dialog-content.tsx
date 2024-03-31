@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import {Lead, P} from "@/components/typography";
 import {getTripsByUserId} from "@/db/queries/user/q";
-import {slugify} from "@/lib/string";
 
 async function getMyTrips(userId: number) {
   let res = await getTripsByUserId(userId);
@@ -33,7 +32,7 @@ export async function Content({userId}: {userId: number}) {
             />
             <div className="py-2">
               <Link
-                href={`/trips/${slugify(trip.id.toString())}`}
+                href={`/trips/${trip.id.toString()}`}
                 className="font-semibold hover:opacity-50"
               >
                 <Lead className="text-base">{trip.name}</Lead>

@@ -5,7 +5,7 @@ import {z} from "zod";
 import {Icons} from "@/components/icons";
 import Link from "@/components/link";
 import {PageWrapper} from "@/components/page-wrapper";
-import {H1, P} from "@/components/typography";
+import {H1, Lead} from "@/components/typography";
 import {sql} from "@/db/client";
 import {slugify} from "@/lib/string";
 
@@ -40,18 +40,20 @@ async function HomePage() {
       <aside className=" mb-10 flex min-h-[55dvh] items-center rounded-md bg-hero-pattern bg-cover bg-center shadow-md">
         <div className="flex flex-col gap-2  p-2">
           <H1 className="capitalize">Never stop exploring</H1>
-          <P className="opacity-60 ">
+          <Lead className="opacity-60 ">
             Welcome to Trip Talks, a social network for travelers
-          </P>
-          <Link
-            className="w-48 rounded-md bg-gray-900/80 px-4 py-2 text-white transition-colors hover:bg-primary-500/90"
-            href="/trips"
-          >
-            Explore destinations
-          </Link>
+          </Lead>
+          <div>
+            <Link
+              className="rounded-md bg-gray-900/90 px-2 py-1 text-white transition-colors hover:bg-primary-500/90"
+              href="/trips"
+            >
+              Explore destinations
+            </Link>
+          </div>
         </div>
       </aside>
-      <section className="border-2 md:my-[2rem]">
+      <section className="md:my-[2rem]">
         <ul className=" grid  grid-cols-1 gap-10 p-5 md:grid-cols-3">
           {trips.map((trip) => (
             <TripItem key={trip.id} trip={trip} />

@@ -16,6 +16,7 @@ export default async function TripPage({
   return (
     <div>
       <pre>{JSON.stringify(trip, null, 2)}</pre>
+      <EditTrip trip={trip} />
     </div>
   );
 }
