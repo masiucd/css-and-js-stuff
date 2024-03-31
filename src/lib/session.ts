@@ -36,7 +36,7 @@ export async function updateSession(request: NextRequest) {
 
   let res = NextResponse.next();
   res.cookies.set({
-    name: "session",
+    name: sessionName,
     value: await encrypt({
       email: parsed.email as string,
       expires: parsed.expires as Date,

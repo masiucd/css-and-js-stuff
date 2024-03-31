@@ -17,27 +17,27 @@ export async function Content({userId}: {userId: number}) {
   let tripsResult = await getMyTrips(userId);
   return (
     <div className="mb-5 flex flex-col ">
-      <ul className="grid max-h-[32rem] grid-cols-1 gap-3  overflow-scroll sm:grid-cols-2 md:max-h-none md:grid-cols-3">
+      <ul className="grid max-h-[32rem] grid-cols-1 gap-2  overflow-scroll sm:grid-cols-2 md:max-h-none md:grid-cols-3">
         {tripsResult.map((trip) => (
           <li
             key={trip.id}
-            className="flex flex-col justify-start gap-3 rounded-md  bg-gray-100 p-1 shadow-md"
+            className="flex flex-col justify-start gap-3 rounded-md  border bg-gray-100 p-1 shadow-md"
           >
             <Image
               src={`/images/${trip.image}.jpeg`}
               alt={trip.name}
-              className="size-32 rounded-md  object-cover shadow-sm lg:size-40 "
-              width={524}
-              height={524}
+              className="size-32 rounded-md  object-cover shadow-sm lg:size-44 "
+              width={1000}
+              height={1000}
             />
-            <div>
+            <div className="py-2">
               <Link
                 href={`/trips/${trip.name}`}
-                className="font-semibold underline hover:opacity-50"
+                className="text-sm font-semibold underline hover:opacity-50"
               >
                 <Lead>{trip.name}</Lead>
               </Link>
-              <P>{trip.description}</P>
+              <P className="text-pretty">{trip.description}</P>
             </div>
           </li>
         ))}

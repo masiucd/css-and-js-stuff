@@ -24,8 +24,8 @@ export function ViewTripsDialog({
           <H2>Your Trips</H2>
         </Dialog.Title>
 
-        {children}
-        <div className="flex justify-end ">
+        <div className="p-2 md:min-w-[52rem] md:p-5">{children}</div>
+        <div className="flex  justify-end">
           <Dialog.Close>
             <button className="rounded bg-gray-900/80 px-4 py-2 font-bold text-white hover:bg-primary-700">
               Close
