@@ -1,9 +1,5 @@
-import {sql} from "@/db/client";
-
-async function getTripById(tripId: string) {
-  let rows = await sql`select * from trips where id = ${tripId}`;
-  return rows[0];
-}
+import {getTrip} from "./actions";
+import {EditTrip} from "./edit-trip";
 
 export default async function TripPage({
   params,
@@ -12,7 +8,7 @@ export default async function TripPage({
     id: string;
   };
 }) {
-  let trip = await getTripById(params.id);
+  let trip = await getTrip(params.id);
   return (
     <div>
       <pre>{JSON.stringify(trip, null, 2)}</pre>
@@ -20,6 +16,3 @@ export default async function TripPage({
     </div>
   );
 }
-
-// TODO
-// Edit trip but only if user is the author
