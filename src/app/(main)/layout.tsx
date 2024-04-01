@@ -1,7 +1,7 @@
 import {type ReactNode} from "react";
 
 import {ActiveLink} from "@/components/active-link";
-import Link from "@/components/link";
+import {Link} from "@/components/link";
 import {Small} from "@/components/typography";
 import {siteData} from "@/config/site-data";
 import {getSession} from "@/lib/session";
@@ -28,7 +28,7 @@ async function Header() {
     <header className="flex h-[5rem]">
       <div className="app-width mx-auto flex w-full flex-1 items-center justify-between px-2">
         <Link href="/" className="transition-opacity hover:opacity-50">
-          <strong className="text-xl font-bold capitalize leading-none opacity-80 hover:opacity-100 focus:opacity-100 active:opacity-100">
+          <strong className="text-xl font-bold capitalize leading-none text-gray-900 opacity-80 hover:opacity-100 focus:opacity-100 active:opacity-100">
             {siteData.title}
           </strong>
         </Link>

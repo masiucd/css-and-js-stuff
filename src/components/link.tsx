@@ -1,34 +1,34 @@
+import {Link as RadixLink} from "@radix-ui/themes";
 import NextLink from "next/link";
-import {type ComponentPropsWithoutRef, type PropsWithChildren} from "react";
-
-import {cn} from "@/lib/cn";
+import {type ComponentPropsWithoutRef, ElementRef, forwardRef} from "react";
 
 type NextLinkKeys = "href" | "replace" | "scroll" | "prefetch";
 
+type RadixLinkProps = Omit<
+  ComponentPropsWithoutRef<typeof RadixLink>,
+  NextLinkKeys
+>;
 type NextLinkProps = Pick<
   ComponentPropsWithoutRef<typeof NextLink>,
   NextLinkKeys
 >;
 
-function Link({
-  href,
-  replace,
-  scroll,
-  prefetch,
-  children,
-  className,
-}: NextLinkProps & PropsWithChildren<{className?: string}>) {
-  return (
-    <NextLink
-      href={href}
-      replace={replace}
-      scroll={scroll}
-      prefetch={prefetch}
-      className={cn("", className)}
-    >
-      {children}
-    </NextLink>
-  );
-}
-
-export default Link;
+export const Link = forwardRef<ElementRef<"a">, RadixLinkProps & NextLinkProps>(
+  function Link(
+    {children, href, replace, scroll, prefetch, className, ...rest},
+    forwardedRef,
+  ) {
+    return (
+      <RadixLink asChild {...rest} ref={forwardedRef} className={className}>
+        <NextLink
+          href={href}
+          replace={replace}
+          scroll={scroll}
+          prefetch={prefetch}
+        >
+          {children}
+        </NextLink>
+      </RadixLink>
+    );
+  },
+);
