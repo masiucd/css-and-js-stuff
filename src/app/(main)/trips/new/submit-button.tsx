@@ -1,16 +1,23 @@
 "use client";
 
+import {Text} from "@radix-ui/themes";
+import {type PropsWithChildren} from "react";
 import {useFormStatus} from "react-dom";
 
-export function SubmitButton() {
+import {Button} from "@/components/button";
+
+export function SubmitButton({children}: PropsWithChildren) {
   const status = useFormStatus();
   return (
-    <button
-      className="rounded-md bg-gray-900 px-4 py-2 text-gray-50  transition-colors hover:opacity-55"
-      type="submit"
-      aria-disabled={status.pending}
-    >
-      Create trip
-    </button>
+    <Button type="submit" aria-disabled={status.pending}>
+      <Text
+        as="span"
+        size="3"
+        weight="medium"
+        className="capitalize text-gray-100"
+      >
+        {children}
+      </Text>
+    </Button>
   );
 }

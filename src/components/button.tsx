@@ -12,6 +12,7 @@ export function Button({
   className,
   children,
   type,
+  asChild,
   ...restProps
 }: Props) {
   return (
@@ -23,11 +24,13 @@ export function Button({
       radius={radius}
       loading={loading}
       className={className}
+      style={{cursor: "pointer"}}
       type={type}
-      asChild
+      asChild={asChild}
       {...restProps}
     >
-      <button>{children}</button>
+      {/* <button className="cursor-pointer">{children}</button> */}
+      {children}
     </RadixButton>
   );
 }

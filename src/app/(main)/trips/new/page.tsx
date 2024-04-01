@@ -40,7 +40,7 @@ function CreateTripForm({user}: {user: Awaited<UserProfile>}) {
         <label htmlFor="description">Description</label>
         <textarea id="description" name="description" required></textarea>
         <input type="hidden" name="user-id" value={user.id} />
-        <SubmitButton />
+        <SubmitButton>Create trip</SubmitButton>
       </fieldset>
     </form>
   );

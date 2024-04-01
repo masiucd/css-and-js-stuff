@@ -18,7 +18,7 @@ export default async function LoginPage() {
   }
   return (
     <Section className="mx-auto mt-20 flex w-full max-w-xl  flex-col items-center md:min-h-[32rem]">
-      <aside className="mb-5 w-full md:mb-20">
+      <aside className="mb-5 w-full ">
         <Heading as="h1" size="9" className=" capitalize text-gray-900">
           Login
         </Heading>
