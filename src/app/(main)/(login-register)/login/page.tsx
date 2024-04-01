@@ -1,7 +1,7 @@
+import {Heading, Section, Text} from "@radix-ui/themes";
 import {type Metadata} from "next";
 import {redirect} from "next/navigation";
 
-import {H1, P} from "@/components/typography";
 import {getSession} from "@/lib/session";
 
 import {LoginForm} from "./login-form";
@@ -17,12 +17,16 @@ export default async function LoginPage() {
     redirect("/profile");
   }
   return (
-    <section className="mx-auto mt-20 flex w-full max-w-xl  flex-col items-center  border border-red-500 md:min-h-[32rem]">
-      <aside className="mb-20 w-full border border-red-500">
-        <H1>Login</H1>
-        <P>Login to your account.</P>
+    <Section className="mx-auto mt-20 flex w-full max-w-xl  flex-col items-center md:min-h-[32rem]">
+      <aside className="mb-5 w-full md:mb-20">
+        <Heading as="h1" size="9" className=" capitalize text-gray-900">
+          Login
+        </Heading>
+        <Text as="p" size="6" weight="medium" className="opacity-70">
+          Login to your account.
+        </Text>
       </aside>
       <LoginForm />
-    </section>
+    </Section>
   );
 }

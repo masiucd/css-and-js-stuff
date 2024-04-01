@@ -1,6 +1,10 @@
 "use client";
+import {TextField} from "@radix-ui/themes";
 import Link from "next/link";
+import {type ReactNode} from "react";
 import {useFormState} from "react-dom";
+
+import {Icons} from "@/components/icons";
 
 import {login} from "./actions";
 
@@ -16,11 +20,25 @@ export function LoginForm() {
       <fieldset className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" required />
+          <TextInput
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email..."
+            icon={<Icons.mail size={16} />}
+            required
+          />
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" required />
+          <TextInput
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password..."
+            icon={<Icons.lock size={16} />}
+            required
+          />
         </div>
         <div className="mb-2 h-3">
           {state.status !== 200 && (
@@ -43,5 +61,54 @@ export function LoginForm() {
         </Link>
       </small>
     </form>
+  );
+}
+
+type InputType =
+  | "date"
+  | "datetime-local"
+  | "email"
+  | "hidden"
+  | "month"
+  | "number"
+  | "password"
+  | "search"
+  | "tel"
+  | "text"
+  | "time"
+  | "url"
+  | "week"
+  | "password";
+
+interface TextInputProps {
+  type: InputType;
+  name: string;
+  placeholder?: string;
+  required?: boolean;
+  className?: string;
+  id?: string;
+  icon?: ReactNode;
+}
+
+export function TextInput({
+  type,
+  name,
+  placeholder,
+  required = true,
+  className,
+  id,
+  icon,
+}: TextInputProps) {
+  return (
+    <TextField.Root
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      required={required}
+      className={className}
+      id={id}
+    >
+      {icon && <TextField.Slot>{icon}</TextField.Slot>}
+    </TextField.Root>
   );
 }
