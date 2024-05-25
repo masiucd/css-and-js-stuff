@@ -64,6 +64,15 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  apps/starting-style:
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.3.3
+      vite:
+        specifier: ^5.2.0
+        version: 5.2.11(@types/node@20.11.24)
+
   apps/url-search-params:
     devDependencies:
       typescript:
