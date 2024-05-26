@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {usePathname, useSearchParams} from "next/navigation";
+import {useSearchParams} from "next/navigation";
 import {PropsWithChildren} from "react";
 
 import {Icons} from "@/components/icons";
@@ -27,7 +27,6 @@ export function Products({
   let paramsId = Number(getOrDefault(params, "id", 1));
   let paramSize = getOrDefault(params, "size", null);
   let product = products.find(({id}) => id === paramsId) ?? products[0];
-  console.log("🚀 ~ product:", product, searchParams);
 
   return (
     <>
@@ -75,30 +74,60 @@ export function Products({
             </span>
           </ArrowLink>
         </div>
-        <ul className="flex gap-2">
-          {product.amiableSizes.map(({size, available}) => {
-            let selectedSize = paramsId === product.id && size === paramSize;
-            return (
-              <li key={size}>
-                <Link
-                  href={getHref(product, size, params.toString())}
-                  scroll={false}
-                  className={cn(
-                    "min-w-12 cursor-pointer rounded-md uppercase bg-main-950  text-center font-bold  text-main-50 shadow p-1 hover:opacity-55 transition-opacity",
-                    available
-                      ? "opacity-100 pointer-events-auto"
-                      : "opacity-50 pointer-events-none ",
-                    selectedSize && "bg-main-50 text-main-950"
-                  )}
-                >
-                  {size}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <SizeList
+          product={product}
+          paramsId={paramsId}
+          paramSize={paramSize}
+          params={params}
+          searchParams={searchParams}
+        />
       </div>
     </>
+  );
+}
+
+function SizeList({
+  product,
+  paramsId,
+  paramSize,
+  params,
+  searchParams,
+}: {
+  product: ProductType;
+  paramsId: number;
+  paramSize: string;
+  params: URLSearchParams;
+  searchParams?: Record<string, string>;
+}) {
+  let url = new URLSearchParams(params.toString());
+  if (searchParams) {
+    url.set("size", paramSize);
+  }
+  // TODO:
+  console.log("url", url.toString());
+  return (
+    <ul className="flex gap-2">
+      {product.amiableSizes.map(({size, available}) => {
+        let selectedSize = paramsId === product.id && size === paramSize;
+        return (
+          <li key={size}>
+            <Link
+              href={getHref(product, size, params.toString())}
+              scroll={false}
+              className={cn(
+                "min-w-12 cursor-pointer rounded-md uppercase bg-main-950  text-center font-bold  text-main-50 shadow p-1 hover:opacity-55 transition-opacity",
+                available
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-50 pointer-events-none ",
+                selectedSize && "bg-main-50 text-main-950"
+              )}
+            >
+              {size}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
