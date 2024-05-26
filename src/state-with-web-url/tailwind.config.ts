@@ -1,4 +1,5 @@
 import type {Config} from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 const config: Config = {
   content: [
@@ -9,6 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {},
+      colors: {
+        gray: colors.stone,
+        main: colors.indigo,
+      },
     },
   },
   plugins: [],
