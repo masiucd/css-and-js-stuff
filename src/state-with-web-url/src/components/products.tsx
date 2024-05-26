@@ -3,10 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import {usePathname, useSearchParams} from "next/navigation";
+import {PropsWithChildren} from "react";
 
 import {Icons} from "@/components/icons";
 import {cn} from "@/lib/cn";
-import {isDivisibleBy, isEven, isOdd} from "@/lib/util/even-odd";
 import {slugify} from "@/lib/util/slugify";
 
 function getOrDefault<T>(
@@ -23,42 +23,33 @@ export function Products({
 }: {
   searchParams: Record<string, string> | undefined;
 }) {
-  let pathName = usePathname();
-  console.log("🚀 ~ Products ~ pathName:", pathName);
   let params = useSearchParams();
   let paramsId = Number(getOrDefault(params, "id", 1));
-  // let paramName = getOrDefault(params, "name", null);
   let paramSize = getOrDefault(params, "size", null);
-  // let [currentProductIndex, setCurrentProductIndex] = useState(paramsId);
-  // let [productIds, setProductIds] = useState(products.map(({id}) => id));
-
-  let product = products[paramsId - 1];
-
-  // let searchParamsURL = new URLSearchParams(params.toString());
-  // console.log("🚀 ~ Products ~ searchParamsURL:", searchParamsURL.keys());
-
-  // for (let [key, value] of searchParamsURL) {
-  //   console.log(key, value);
-  // }
+  let product = products.find(({id}) => id === paramsId) ?? products[0];
+  console.log("🚀 ~ product:", product, searchParams);
 
   return (
     <>
       <div className="flex flex-col items-center justify-center border-2 px-2 py-4">
         <h2 className="text-3xl font-semibold">{product.name}</h2>
         <p className="text-xl font-semibold">${product.price}</p>
-        <div className="my-5 flex min-h-[25rem]  gap-4 border-2 py-5">
-          <Link
-            aria-disabled={product.id === 1}
-            className={cn(
-              "cursor-pointer",
-              product.id === 1 ? "pointer-events-none" : "pointer-events-auto"
-            )}
-            href={`/?id=${product.id - 1}&name=${slugify(product.name)}&size=xl`}
+        <div className="my-5 flex min-h-[25rem] items-center gap-4  border-2 bg-green-400 py-5">
+          <ArrowLink
+            ariaDisabled={product.id === 1}
+            product={product}
+            searchParams={searchParams}
+            direction="left"
+            className={
+              product.id === 1
+                ? "pointer-events-none opacity-30"
+                : "pointer-events-auto"
+            }
           >
             <span>
               <Icons.ArrowLeft />
             </span>
-          </Link>
+          </ArrowLink>
           <div className="w-60">
             <Image
               src={product.imageUrl}
@@ -68,44 +59,37 @@ export function Products({
               className="rounded-md  object-fill "
             />
           </div>
-          <Link
-            aria-disabled={product.id === products.length}
-            className={cn(
-              "cursor-pointer",
+          <ArrowLink
+            ariaDisabled={product.id === products.length}
+            product={product}
+            searchParams={searchParams}
+            direction="right"
+            className={
               product.id === products.length
-                ? "pointer-events-none"
-                : "pointer-events-auto"
-            )}
-            href={`/?id=${product.id + 1}&name=${slugify(product.name)}&size=${paramSize}`}
+                ? "pointer-events-none opacity-30"
+                : "pointer-events-auto "
+            }
           >
             <span>
               <Icons.ArrowRight />
             </span>
-          </Link>
+          </ArrowLink>
         </div>
         <ul className="flex gap-2">
           {product.amiableSizes.map(({size, available}) => {
             let selectedSize = paramsId === product.id && size === paramSize;
-            let searchParamsURL = new URLSearchParams(params.toString());
-            searchParamsURL.set("size", size);
-            console.log(
-              "🚀 ~ {sizes.map ~ searchParamsURL:",
-              searchParamsURL.toString()
-            );
-
             return (
-              <li
-                key={size}
-                className={cn(
-                  "min-w-12 cursor-pointer rounded-md uppercase bg-main-950 p-2 text-center font-bold  text-main-50 shadow",
-                  available
-                    ? "opacity-100 pointer-events-auto"
-                    : "opacity-50 pointer-events-none",
-                  selectedSize && "bg-main-50 text-main-950"
-                )}
-              >
+              <li key={size}>
                 <Link
-                  href={`/?id=${product.id}&name=${slugify(product.name)}&size=${size}`}
+                  href={getHref(product, size, params.toString())}
+                  scroll={false}
+                  className={cn(
+                    "min-w-12 cursor-pointer rounded-md uppercase bg-main-950  text-center font-bold  text-main-50 shadow p-1 hover:opacity-55 transition-opacity",
+                    available
+                      ? "opacity-100 pointer-events-auto"
+                      : "opacity-50 pointer-events-none ",
+                    selectedSize && "bg-main-50 text-main-950"
+                  )}
                 >
                   {size}
                 </Link>
@@ -118,6 +102,71 @@ export function Products({
   );
 }
 
+function ArrowLink({
+  product,
+  children,
+  ariaDisabled,
+  className,
+  searchParams,
+  direction,
+}: PropsWithChildren<{
+  product: ProductType;
+  ariaDisabled: boolean;
+  className?: string;
+  searchParams?: Record<string, string>;
+  direction: "left" | "right";
+}>) {
+  return (
+    <Link
+      aria-disabled={ariaDisabled}
+      className={cn("cursor-pointer", className)}
+      href={getHrefForArrow(product, direction, searchParams)}
+      scroll={false}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function getHrefForArrow(
+  product: ProductType,
+  direction: "left" | "right",
+  searchParams: Record<string, string> | undefined
+) {
+  let searchParamsURL = new URLSearchParams();
+  let nextProduct = null;
+  if (direction === "left") {
+    searchParamsURL.set("id", (product.id - 1).toString());
+    nextProduct = products.find(
+      ({id}) => id === Number(searchParamsURL.get("id"))
+    );
+  } else {
+    searchParamsURL.set("id", (product.id + 1).toString());
+    nextProduct = products.find(
+      ({id}) => id === Number(searchParamsURL.get("id"))
+    );
+    // console.log({nextProduct});
+  }
+  // let foundedProduct = products.find(({id}) => id === Number(searchParamsURL.get("id")));
+  if (nextProduct) {
+    searchParamsURL.set("name", slugify(nextProduct.name));
+  }
+
+  if (searchParams?.size) {
+    searchParamsURL.set("size", searchParams.size);
+  }
+  return `/?${searchParamsURL.toString()}`;
+}
+
+function getHref(product: ProductType, size: string, urlParams: string) {
+  let searchParamsURL = new URLSearchParams(urlParams);
+  searchParamsURL.set("id", product.id.toString());
+  searchParamsURL.set("name", slugify(product.name));
+  searchParamsURL.set("size", size);
+  return `/?${searchParamsURL.toString()}`;
+}
+
+type ProductType = (typeof products)[number];
 // let sizes = Object.freeze(["xs", "sm", "md", "lg", "xl", "2xl"]);
 let products = Object.freeze([
   {
