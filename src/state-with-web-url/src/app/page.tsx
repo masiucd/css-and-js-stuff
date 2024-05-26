@@ -1,11 +1,15 @@
 import {Products} from "@/components/products";
 
-export default function Home() {
+export default function Home({
+  searchParams,
+}: {
+  searchParams: Record<string, string> | undefined;
+}) {
   return (
     <section className="flex flex-1 flex-col">
       <Title />
       <div className="flex  flex-1 items-center justify-center  bg-blue-200">
-        <Products />
+        <Products searchParams={searchParams} />
       </div>
     </section>
   );

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {useSearchParams} from "next/navigation";
+import {usePathname, useSearchParams} from "next/navigation";
 
 import {Icons} from "@/components/icons";
 import {cn} from "@/lib/cn";
@@ -18,28 +18,28 @@ function getOrDefault<T>(
   return value === null ? defaultValue : value;
 }
 
-export function Products() {
+export function Products({
+  searchParams,
+}: {
+  searchParams: Record<string, string> | undefined;
+}) {
+  let pathName = usePathname();
+  console.log("🚀 ~ Products ~ pathName:", pathName);
   let params = useSearchParams();
-  let paramsId = Number(getOrDefault(params, "id", 0));
+  let paramsId = Number(getOrDefault(params, "id", 1));
   // let paramName = getOrDefault(params, "name", null);
-  // let paramSize = getOrDefault(params, "size", null);
+  let paramSize = getOrDefault(params, "size", null);
   // let [currentProductIndex, setCurrentProductIndex] = useState(paramsId);
   // let [productIds, setProductIds] = useState(products.map(({id}) => id));
 
   let product = products[paramsId - 1];
 
-  // console.log(
-  //   "params",
-  //   params.forEach((s) => {
-  //     console.log(s);
-  //   })
-  // );
+  // let searchParamsURL = new URLSearchParams(params.toString());
+  // console.log("🚀 ~ Products ~ searchParamsURL:", searchParamsURL.keys());
 
-  // let x = new URLSearchParams(window.location.search);
-  // console.log(
-  //   "x",
-  //   x.forEach((p) => console.log(p))
-  // );
+  // for (let [key, value] of searchParamsURL) {
+  //   console.log(key, value);
+  // }
 
   return (
     <>
@@ -81,7 +81,7 @@ export function Products() {
                 ? "pointer-events-none"
                 : "pointer-events-auto"
             )}
-            href={`/?id=${product.id + 1}&name=${slugify(product.name)}&size=xl`}
+            href={`/?id=${product.id + 1}&name=${slugify(product.name)}&size=${paramSize}`}
             // onClick={() => {
             //   setCurrentProductIndex((prev) =>
             //     prev === products.length - 1 ? 0 : prev + 1
@@ -95,15 +95,23 @@ export function Products() {
         </div>
         <ul className="flex gap-2">
           {sizes.map((size) => {
+            let selectedSize = paramsId === product.id && size === paramSize;
+            let searchParamsURL = new URLSearchParams(params.toString());
+            searchParamsURL.set("size", size);
+            console.log(
+              "🚀 ~ {sizes.map ~ searchParamsURL:",
+              searchParamsURL.toString()
+            );
+
             return (
               <li
                 key={size}
                 className={cn(
-                  "min-w-12 cursor-pointer rounded-md bg-main-950 p-2 text-center font-bold  text-main-50 shadow",
+                  "min-w-12 cursor-pointer rounded-md uppercase bg-main-950 p-2 text-center font-bold  text-main-50 shadow",
                   product.amiableSizes.includes(size)
                     ? "opacity-100 pointer-events-auto"
                     : "opacity-50 pointer-events-none",
-                  Number(paramsId) === product.id ? "bg-red-500" : "bg-main-950"
+                  selectedSize && "bg-main-50 text-main-950"
                 )}
               >
                 <Link
@@ -116,60 +124,6 @@ export function Products() {
           })}
         </ul>
       </div>
-
-      {/* <ul className="flex border-2 border-red-600">
-        {products.map((product) => {
-          return (
-            <li
-              key={product.id}
-              className="flex flex-col items-center justify-center  bg-blue-200"
-            >
-              <h2 className="text-3xl font-semibold">{product.name}</h2>
-              <p className="text-xl font-semibold">${product.price}</p>
-              <div className="my-5 flex gap-4">
-                <button>
-                  <span>
-                    <Icons.ArrowLeft />
-                  </span>
-                </button>
-                <Image
-                  src="/shirt-black.jpg"
-                  alt="Black shirt Uno"
-                  width={300}
-                  height={300}
-                />
-                <button>
-                  <span>
-                    <Icons.ArrowRight />
-                  </span>
-                </button>
-              </div>
-
-              <ul className="flex gap-2">
-                {sizes.map((size) => {
-                  return (
-                    <li
-                      key={size}
-                      className={cn(
-                        "min-w-12 cursor-pointer rounded-md bg-main-950 p-2 text-center font-bold  text-main-50 shadow",
-                        product.amiableSizes.includes(size)
-                          ? "opacity-100 pointer-events-auto"
-                          : "opacity-50 pointer-events-none"
-                      )}
-                    >
-                      <Link
-                        href={`/?id=${product.id}&name=${slugify(product.name)}&size=${size}`}
-                      >
-                        {size}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </li>
-          );
-        })}
-      </ul> */}
     </>
   );
 }
