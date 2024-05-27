@@ -8,6 +8,7 @@ import {PropsWithChildren} from "react";
 import {Icons} from "@/components/icons";
 import {cn} from "@/lib/cn";
 import {slugify} from "@/lib/util/slugify";
+import {products, ProductType} from "@/products";
 
 function getOrDefault<T>(
   params: URLSearchParams,
@@ -25,7 +26,7 @@ export function Products({
 }) {
   let params = useSearchParams();
   let paramsId = Number(getOrDefault(params, "id", 1));
-  let paramSize = getOrDefault(params, "size", null);
+  // let paramSize = getOrDefault(params, "size", null);
   let product = products.find(({id}) => id === paramsId) ?? products[0];
 
   return (
@@ -77,7 +78,6 @@ export function Products({
         <SizeList
           product={product}
           paramsId={paramsId}
-          paramSize={paramSize}
           params={params}
           searchParams={searchParams}
         />
@@ -89,26 +89,19 @@ export function Products({
 function SizeList({
   product,
   paramsId,
-  paramSize,
   params,
   searchParams,
 }: {
   product: ProductType;
   paramsId: number;
-  paramSize: string;
   params: URLSearchParams;
   searchParams?: Record<string, string>;
 }) {
-  let url = new URLSearchParams(params.toString());
-  if (searchParams) {
-    url.set("size", paramSize);
-  }
-  // TODO:
-  console.log("url", url.toString());
   return (
     <ul className="flex gap-2">
       {product.amiableSizes.map(({size, available}) => {
-        let selectedSize = paramsId === product.id && size === paramSize;
+        let selectedSize =
+          paramsId === product.id && size === searchParams?.size;
         return (
           <li key={size}>
             <Link
@@ -188,142 +181,9 @@ function getHrefForArrow(
 }
 
 function getHref(product: ProductType, size: string, urlParams: string) {
-  let searchParamsURL = new URLSearchParams(urlParams);
-  searchParamsURL.set("id", product.id.toString());
-  searchParamsURL.set("name", slugify(product.name));
-  searchParamsURL.set("size", size);
-  return `/?${searchParamsURL.toString()}`;
+  let url = new URLSearchParams(urlParams);
+  url.set("id", product.id.toString());
+  url.set("name", slugify(product.name));
+  url.set("size", size);
+  return `/?${url.toString()}`;
 }
-
-type ProductType = (typeof products)[number];
-// let sizes = Object.freeze(["xs", "sm", "md", "lg", "xl", "2xl"]);
-let products = Object.freeze([
-  {
-    id: 1,
-    name: "Black shirt Uno",
-    imageUrl: "/shirt-black.jpg",
-    amiableSizes: [
-      {
-        size: "xs",
-        available: true,
-      },
-      {
-        size: "sm",
-        available: true,
-      },
-      {
-        size: "md",
-        available: true,
-      },
-      {
-        size: "lg",
-        available: true,
-      },
-      {
-        size: "xl",
-        available: true,
-      },
-      {
-        size: "2xl",
-        available: false,
-      },
-    ],
-    price: 100.25,
-  },
-  {
-    id: 2,
-    name: "White shirt",
-    imageUrl: "/shirt-white.jpg",
-    amiableSizes: [
-      {
-        size: "xs",
-        available: true,
-      },
-      {
-        size: "sm",
-        available: true,
-      },
-      {
-        size: "md",
-        available: true,
-      },
-      {
-        size: "lg",
-        available: true,
-      },
-      {
-        size: "xl",
-        available: true,
-      },
-      {
-        size: "2xl",
-        available: true,
-      },
-    ],
-    price: 200.0,
-  },
-  {
-    id: 3,
-    name: "Black shirt Dos",
-    imageUrl: "/shirt-black-two.jpg",
-    amiableSizes: [
-      {
-        size: "xs",
-        available: true,
-      },
-      {
-        size: "sm",
-        available: true,
-      },
-      {
-        size: "md",
-        available: true,
-      },
-      {
-        size: "lg",
-        available: true,
-      },
-      {
-        size: "xl",
-        available: true,
-      },
-      {
-        size: "2xl",
-        available: true,
-      },
-    ],
-    price: 120.55,
-  },
-  {
-    id: 4,
-    name: "Cat shirt",
-    imageUrl: "/shirt-cat.jpg",
-    amiableSizes: [
-      {
-        size: "xs",
-        available: true,
-      },
-      {
-        size: "sm",
-        available: true,
-      },
-      {
-        size: "md",
-        available: true,
-      },
-      {
-        size: "lg",
-        available: true,
-      },
-      {
-        size: "xl",
-        available: true,
-      },
-      {
-        size: "2xl",
-        available: true,
-      },
-    ],
-    price: 150.75,
-  },
-]);
