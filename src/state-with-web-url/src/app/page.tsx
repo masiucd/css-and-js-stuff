@@ -1,4 +1,4 @@
-import {Products} from "@/components/products";
+import {Product} from "@/components/product";
 
 export default function Home({
   searchParams,
@@ -9,7 +9,7 @@ export default function Home({
     <section className="flex flex-1 flex-col">
       <Title />
       <div className="flex  flex-1 items-center justify-center  bg-blue-200">
-        <Products searchParams={searchParams} />
+        <Product searchParams={searchParams} />
       </div>
     </section>
   );
