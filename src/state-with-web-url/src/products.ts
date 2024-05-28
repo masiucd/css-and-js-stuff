@@ -16,7 +16,7 @@ export let products = Object.freeze([
       },
       {
         size: "md",
-        available: true,
+        available: false,
       },
       {
         size: "lg",
@@ -40,7 +40,7 @@ export let products = Object.freeze([
     amiableSizes: [
       {
         size: "xs",
-        available: true,
+        available: false,
       },
       {
         size: "sm",
@@ -60,7 +60,7 @@ export let products = Object.freeze([
       },
       {
         size: "2xl",
-        available: true,
+        available: false,
       },
     ],
     price: 200.0,
@@ -72,11 +72,11 @@ export let products = Object.freeze([
     amiableSizes: [
       {
         size: "xs",
-        available: true,
+        available: false,
       },
       {
         size: "sm",
-        available: true,
+        available: false,
       },
       {
         size: "md",
@@ -84,7 +84,7 @@ export let products = Object.freeze([
       },
       {
         size: "lg",
-        available: true,
+        available: false,
       },
       {
         size: "xl",
@@ -116,11 +116,11 @@ export let products = Object.freeze([
       },
       {
         size: "lg",
-        available: true,
+        available: false,
       },
       {
         size: "xl",
-        available: true,
+        available: false,
       },
       {
         size: "2xl",

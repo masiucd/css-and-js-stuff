@@ -25,13 +25,14 @@ export function Products({
   searchParams: Record<string, string> | undefined;
 }) {
   let params = useSearchParams();
-  let paramsId = Number(getOrDefault(params, "id", 1));
+  let urlSearchParams = new URLSearchParams(params.toString());
+  let paramsId = Number(getOrDefault(urlSearchParams, "id", 1));
   let product = products.find(({id}) => id === paramsId) ?? products[0];
 
   // if we change the shirt we need to delete the size from the url
-  if (product.id !== paramsId) {
-    // params.delete("size");
-  }
+  // if (product.id !== paramsId) {
+  //   urlSearchParams.delete("size");
+  // }
   return (
     <>
       <div className="flex flex-col items-center justify-center border-2 px-2 py-4">
@@ -43,6 +44,7 @@ export function Products({
             product={product}
             searchParams={searchParams}
             direction="left"
+            params={urlSearchParams}
             className={
               product.id === 1
                 ? "pointer-events-none opacity-30"
@@ -67,6 +69,7 @@ export function Products({
             product={product}
             searchParams={searchParams}
             direction="right"
+            params={urlSearchParams}
             className={
               product.id === products.length
                 ? "pointer-events-none opacity-30"
@@ -81,7 +84,7 @@ export function Products({
         <SizeList
           product={product}
           paramsId={paramsId}
-          params={params}
+          params={urlSearchParams}
           searchParams={searchParams}
         />
       </div>
@@ -100,7 +103,7 @@ function SizeList({
   params: URLSearchParams;
   searchParams?: Record<string, string>;
 }) {
-  let urlSearchParams = new URLSearchParams(params.toString());
+  // let urlSearchParams = new URLSearchParams(params.toString());
   return (
     <ul className="flex gap-2">
       {product.amiableSizes.map(({size, available}) => {
@@ -113,7 +116,7 @@ function SizeList({
             available={available}
             selectedSize={selectedSize}
             product={product}
-            urlSearchParams={urlSearchParams}
+            params={params}
           />
         );
       })}
@@ -126,18 +129,18 @@ function SizeListItem({
   available,
   selectedSize,
   product,
-  urlSearchParams,
+  params,
 }: {
   size: string;
   available: boolean;
   selectedSize: boolean;
   product: ProductType;
-  urlSearchParams: URLSearchParams;
+  params: URLSearchParams;
 }) {
   return (
     <li>
       <Link
-        href={getHref(product, size, urlSearchParams)}
+        href={getHref(product, size, params)}
         scroll={false}
         className={cn(
           "min-w-12 cursor-pointer rounded-md uppercase bg-main-950  text-center font-bold  text-main-50 shadow p-1 hover:opacity-55 transition-opacity",
@@ -160,18 +163,20 @@ function ArrowLink({
   className,
   searchParams,
   direction,
+  params,
 }: PropsWithChildren<{
   product: ProductType;
   ariaDisabled: boolean;
   className?: string;
   searchParams?: Record<string, string>;
   direction: "left" | "right";
+  params: URLSearchParams;
 }>) {
   return (
     <Link
       aria-disabled={ariaDisabled}
       className={cn("cursor-pointer", className)}
-      href={getHrefForArrow(product, direction, searchParams)}
+      href={getHrefForArrow(product, direction, searchParams, params)}
       scroll={false}
     >
       {children}
@@ -179,43 +184,37 @@ function ArrowLink({
   );
 }
 
+// TODO improve code
 function getHrefForArrow(
   product: ProductType,
   direction: "left" | "right",
-  searchParams: Record<string, string> | undefined
+  searchParams: Record<string, string> | undefined,
+  params: URLSearchParams
 ) {
-  let searchParamsURL = new URLSearchParams();
   let nextProduct = null;
   if (direction === "left") {
-    searchParamsURL.set("id", (product.id - 1).toString());
-    nextProduct = products.find(
-      ({id}) => id === Number(searchParamsURL.get("id"))
-    );
+    params.set("id", (product.id - 1).toString());
+    nextProduct = products.find(({id}) => id === Number(params.get("id")));
   } else {
-    searchParamsURL.set("id", (product.id + 1).toString());
-    nextProduct = products.find(
-      ({id}) => id === Number(searchParamsURL.get("id"))
-    );
+    params.set("id", (product.id + 1).toString());
+    nextProduct = products.find(({id}) => id === Number(params.get("id")));
     // console.log({nextProduct});
   }
-  // let foundedProduct = products.find(({id}) => id === Number(searchParamsURL.get("id")));
   if (nextProduct) {
-    searchParamsURL.set("name", slugify(nextProduct.name));
+    params.set("name", slugify(nextProduct.name));
   }
 
   if (searchParams?.size) {
-    searchParamsURL.set("size", searchParams.size);
+    params.set("size", searchParams.size);
   }
-  return `/?${searchParamsURL.toString()}`;
+  // Delete size if we change the shirt
+  params.delete("size");
+  return `/?${params.toString()}`;
 }
 
-function getHref(
-  product: ProductType,
-  size: string,
-  urlSearchParams: URLSearchParams
-) {
+function getHref(product: ProductType, size: string, params: URLSearchParams) {
   let newParams = new URLSearchParams({
-    ...Object.fromEntries(urlSearchParams),
+    ...Object.fromEntries(params),
     id: product.id.toString(),
     name: slugify(product.name),
     size: size,
