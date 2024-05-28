@@ -29,10 +29,6 @@ export function Products({
   let paramsId = Number(getOrDefault(urlSearchParams, "id", 1));
   let product = products.find(({id}) => id === paramsId) ?? products[0];
 
-  // if we change the shirt we need to delete the size from the url
-  // if (product.id !== paramsId) {
-  //   urlSearchParams.delete("size");
-  // }
   return (
     <>
       <div className="flex flex-col items-center justify-center border-2 px-2 py-4">
@@ -184,31 +180,26 @@ function ArrowLink({
   );
 }
 
-// TODO improve code
 function getHrefForArrow(
   product: ProductType,
   direction: "left" | "right",
   searchParams: Record<string, string> | undefined,
   params: URLSearchParams
 ) {
-  let nextProduct = null;
-  if (direction === "left") {
-    params.set("id", (product.id - 1).toString());
-    nextProduct = products.find(({id}) => id === Number(params.get("id")));
-  } else {
-    params.set("id", (product.id + 1).toString());
-    nextProduct = products.find(({id}) => id === Number(params.get("id")));
-    // console.log({nextProduct});
-  }
+  let newId = direction === "left" ? product.id - 1 : product.id + 1;
+  params.set("id", newId.toString());
+
+  let nextProduct = products.find(({id}) => id === newId);
+
   if (nextProduct) {
     params.set("name", slugify(nextProduct.name));
   }
 
   if (searchParams?.size) {
     params.set("size", searchParams.size);
+    params.delete("size");
   }
-  // Delete size if we change the shirt
-  params.delete("size");
+
   return `/?${params.toString()}`;
 }
 
