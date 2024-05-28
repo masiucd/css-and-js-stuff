@@ -26,9 +26,12 @@ export function Products({
 }) {
   let params = useSearchParams();
   let paramsId = Number(getOrDefault(params, "id", 1));
-  // let paramSize = getOrDefault(params, "size", null);
   let product = products.find(({id}) => id === paramsId) ?? products[0];
 
+  // if we change the shirt we need to delete the size from the url
+  if (product.id !== paramsId) {
+    // params.delete("size");
+  }
   return (
     <>
       <div className="flex flex-col items-center justify-center border-2 px-2 py-4">
@@ -97,30 +100,56 @@ function SizeList({
   params: URLSearchParams;
   searchParams?: Record<string, string>;
 }) {
+  let urlSearchParams = new URLSearchParams(params.toString());
   return (
     <ul className="flex gap-2">
       {product.amiableSizes.map(({size, available}) => {
         let selectedSize =
           paramsId === product.id && size === searchParams?.size;
         return (
-          <li key={size}>
-            <Link
-              href={getHref(product, size, params.toString())}
-              scroll={false}
-              className={cn(
-                "min-w-12 cursor-pointer rounded-md uppercase bg-main-950  text-center font-bold  text-main-50 shadow p-1 hover:opacity-55 transition-opacity",
-                available
-                  ? "opacity-100 pointer-events-auto"
-                  : "opacity-50 pointer-events-none ",
-                selectedSize && "bg-main-50 text-main-950"
-              )}
-            >
-              {size}
-            </Link>
-          </li>
+          <SizeListItem
+            key={size}
+            size={size}
+            available={available}
+            selectedSize={selectedSize}
+            product={product}
+            urlSearchParams={urlSearchParams}
+          />
         );
       })}
     </ul>
+  );
+}
+
+function SizeListItem({
+  size,
+  available,
+  selectedSize,
+  product,
+  urlSearchParams,
+}: {
+  size: string;
+  available: boolean;
+  selectedSize: boolean;
+  product: ProductType;
+  urlSearchParams: URLSearchParams;
+}) {
+  return (
+    <li>
+      <Link
+        href={getHref(product, size, urlSearchParams)}
+        scroll={false}
+        className={cn(
+          "min-w-12 cursor-pointer rounded-md uppercase bg-main-950  text-center font-bold  text-main-50 shadow p-1 hover:opacity-55 transition-opacity",
+          available
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-50 pointer-events-none ",
+          selectedSize && "bg-main-50 text-main-950"
+        )}
+      >
+        {size}
+      </Link>
+    </li>
   );
 }
 
@@ -180,10 +209,16 @@ function getHrefForArrow(
   return `/?${searchParamsURL.toString()}`;
 }
 
-function getHref(product: ProductType, size: string, urlParams: string) {
-  let url = new URLSearchParams(urlParams);
-  url.set("id", product.id.toString());
-  url.set("name", slugify(product.name));
-  url.set("size", size);
-  return `/?${url.toString()}`;
+function getHref(
+  product: ProductType,
+  size: string,
+  urlSearchParams: URLSearchParams
+) {
+  let newParams = new URLSearchParams({
+    ...Object.fromEntries(urlSearchParams),
+    id: product.id.toString(),
+    name: slugify(product.name),
+    size: size,
+  });
+  return `/?${newParams.toString()}`;
 }
