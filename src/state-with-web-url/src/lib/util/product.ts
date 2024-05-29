@@ -1,4 +1,4 @@
-import {products, type ProductType} from "@/data";
+import {type ProductType} from "@/lib/api/data";
 
 export function getOrDefault<T>(
   params: URLSearchParams,
@@ -33,7 +33,8 @@ export function getHrefForArrow(
   product: ProductType,
   direction: "left" | "right",
   searchParams: Record<string, string> | undefined,
-  params: URLSearchParams
+  params: URLSearchParams,
+  products: ProductType[]
 ) {
   let newId = direction === "left" ? product.id - 1 : product.id + 1;
   params.set("id", newId.toString());

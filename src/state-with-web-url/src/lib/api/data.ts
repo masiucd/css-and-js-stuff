@@ -1,6 +1,6 @@
-export type ProductType = (typeof products)[number];
-// let sizes = Object.freeze(["xs", "sm", "md", "lg", "xl", "2xl"]);
-export let products = Object.freeze([
+import {z} from "zod";
+
+let products = Object.freeze([
   {
     id: 1,
     name: "Black shirt Uno",
@@ -130,3 +130,27 @@ export let products = Object.freeze([
     price: 150.75,
   },
 ]);
+
+async function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function getProducts() {
+  await sleep(3000);
+  return ProductSchema.array().parse(products);
+}
+
+let ProductSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  imageUrl: z.string(),
+  amiableSizes: z.array(
+    z.object({
+      size: z.string(),
+      available: z.boolean(),
+    })
+  ),
+  price: z.number(),
+});
+
+export type ProductType = z.infer<typeof ProductSchema>;

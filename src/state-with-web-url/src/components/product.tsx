@@ -3,7 +3,7 @@ import Link from "next/link";
 import {PropsWithChildren} from "react";
 
 import {Icons} from "@/components/icons";
-import {products, type ProductType} from "@/data";
+import {getProducts, type ProductType} from "@/lib/api/data";
 import {cn} from "@/lib/cn";
 import {
   buildUrlString,
@@ -13,29 +13,30 @@ import {
 
 import {SizeList} from "./size-list";
 
-export function Product({
+export async function Product({
   searchParams,
 }: {
   searchParams: Record<string, string> | undefined;
 }) {
+  let products = await getProducts();
   let urlSearchParams = new URLSearchParams(buildUrlString(searchParams));
   let paramsId = Number(getOrDefault(urlSearchParams, "id", 1));
-  let product = products.find(({id}) => id === paramsId) ?? products[0];
+  let product = products.find(({id}) => id === paramsId);
+
+  if (!product) {
+    // TODO do something better here
+    return <div>Product not found</div>;
+  }
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center border-2 px-2 py-4">
-        <aside className="flex w-full flex-col ">
-          <h2 className="text-4xl font-semibold leading-tight tracking-tight">
-            {product.name}
-          </h2>
-          <p className="text-xl font-semibold">${product.price}</p>
-        </aside>
+      <div className="flex flex-col items-center justify-center rounded-md border border-gray-600 bg-gray-900 px-2 py-4">
+        <Top product={product} />
         <Body
           product={product}
           searchParams={searchParams}
           urlSearchParams={urlSearchParams}
-          numProducts={products.length}
+          products={products}
         />
         <SizeList
           product={product}
@@ -48,19 +49,30 @@ export function Product({
   );
 }
 
+function Top({product}: {product: ProductType}) {
+  return (
+    <aside className="flex w-full flex-col ">
+      <h2 className="text-4xl font-semibold leading-tight tracking-tight">
+        {product.name}
+      </h2>
+      <p className="text-xl font-semibold">${product.price}</p>
+    </aside>
+  );
+}
+
 function Body({
   product,
   searchParams,
   urlSearchParams,
-  numProducts,
+  products,
 }: {
   product: ProductType;
   searchParams: Record<string, string> | undefined;
   urlSearchParams: URLSearchParams;
-  numProducts: number;
+  products: ProductType[];
 }) {
   return (
-    <div className="my-5 flex min-h-[25rem] items-center gap-4  border-2 bg-green-400 py-5">
+    <div className="my-5 flex min-h-[25rem] items-center gap-4  py-5">
       <ArrowLink
         ariaDisabled={product.id === 1}
         product={product}
@@ -72,6 +84,7 @@ function Body({
             ? "pointer-events-none opacity-30"
             : "pointer-events-auto"
         }
+        products={products}
       >
         <span>
           <Icons.ArrowLeft />
@@ -87,16 +100,17 @@ function Body({
         />
       </div>
       <ArrowLink
-        ariaDisabled={product.id === numProducts}
+        ariaDisabled={product.id === products.length}
         product={product}
         searchParams={searchParams}
         direction="right"
         params={urlSearchParams}
         className={
-          product.id === numProducts
+          product.id === products.length
             ? "pointer-events-none opacity-30"
             : "pointer-events-auto "
         }
+        products={products}
       >
         <span>
           <Icons.ArrowRight />
@@ -114,6 +128,7 @@ function ArrowLink({
   searchParams,
   direction,
   params,
+  products,
 }: PropsWithChildren<{
   product: ProductType;
   ariaDisabled: boolean;
@@ -121,12 +136,13 @@ function ArrowLink({
   searchParams?: Record<string, string>;
   direction: "left" | "right";
   params: URLSearchParams;
+  products: ProductType[];
 }>) {
   return (
     <Link
       aria-disabled={ariaDisabled}
       className={cn("cursor-pointer", className)}
-      href={getHrefForArrow(product, direction, searchParams, params)}
+      href={getHrefForArrow(product, direction, searchParams, params, products)}
       scroll={false}
     >
       {children}

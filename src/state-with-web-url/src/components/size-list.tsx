@@ -1,8 +1,8 @@
 import Link from "next/link";
 
+import {type ProductType} from "@/lib/api/data";
 import {cn} from "@/lib/cn";
 import {getHref} from "@/lib/util/product";
-import {type ProductType} from "@/products";
 
 export function SizeList({
   product,
@@ -15,7 +15,6 @@ export function SizeList({
   params: URLSearchParams;
   searchParams?: Record<string, string>;
 }) {
-  // let urlSearchParams = new URLSearchParams(params.toString());
   return (
     <ul className="flex gap-2">
       {product.amiableSizes.map(({size, available}) => {
@@ -55,11 +54,11 @@ function SizeListItem({
         href={getHref(product, size, params)}
         scroll={false}
         className={cn(
-          "min-w-12 cursor-pointer rounded-md uppercase bg-main-950  text-center font-bold  text-main-50 shadow p-1 hover:opacity-55 transition-opacity",
+          "min-w-12 cursor-pointer rounded-md uppercase bg-gray-100  text-center font-bold  text-main-900 shadow p-1 hover:opacity-55 transition-opacity",
           available
             ? "opacity-100 pointer-events-auto"
             : "opacity-50 pointer-events-none ",
-          selectedSize && "bg-main-50 text-main-950"
+          selectedSize && "bg-main-700 text-main-100"
         )}
       >
         {size}
