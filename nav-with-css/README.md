@@ -4,4 +4,6 @@ This is a simple example of a mobile navigation menu that is only visible on mob
 
 ## How it works
 
-By using `@starting-style` and `popover` built into the browser, we can create a mobile navigation menu that is only visible on mobile devices. The menu is hidden on desktops and tablets.
+By using `@starting-style` and `popover` built into the browser,
+we can create a mobile navigation menu that is only visible on mobile devices.
+The menu is hidden on desktops and tablets.
