@@ -32,6 +32,12 @@
       height: 100dvh;
     }
 
+    header {
+      background-color: #333;
+      height: 10rem;
+      margin-block-end: 50px;
+    }
+
     main {
       margin: 0 auto;
       max-width: 800px;
@@ -47,8 +53,8 @@
 
     main a {
       color: #333;
-
       font-weight: bold;
+      scroll-margin-top: 200px; /* 200px from the top */
     }
 
     #nav[popover] {
@@ -95,21 +101,25 @@
     }
   </style>
   <body>
-    <button popovertarget="nav">Open Nav</button>
-    <nav popover id="nav">
-      <button popovertarget="nav" popovertargetaction="'hide">Close nav</button>
-      <ul>
-        <li>
-          <a href="#">Home</a>
-        </li>
-        <li>
-          <a href="#">About</a>
-        </li>
-        <li>
-          <a href="#">Services</a>
-        </li>
-      </ul>
-    </nav>
+    <header>
+      <button popovertarget="nav">Open Nav</button>
+      <nav popover id="nav">
+        <button popovertarget="nav" popovertargetaction="'hide">
+          Close nav
+        </button>
+        <ul>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">About</a>
+          </li>
+          <li>
+            <a href="#">Services</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
     <main>
       <a id="top" href="#bottom">bottom</a>
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam rem
